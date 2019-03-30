@@ -1,0 +1,52 @@
+{
+  "name": "ligapay",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "bundle": "node node_modules/react-native/local-cli/cli.js start",
+    "bundle:reset": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
+    "run:android": "react-native run-android",
+    "test": "jest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "concurrently --kill-others-on-fail \"npm:bundle:reset\" \"npm:run:android\""
+  },
+  "dependencies": {
+    "@types/styled-components": "^4.1.12",
+    "react": "16.8.3",
+    "react-native": "0.59.2",
+    "styled-components": "^4.2.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/runtime": "^7.4.2",
+    "@react-native-community/eslint-config": "^0.0.3",
+    "@types/jest": "^24.0.11",
+    "@types/react": "^16.8.10",
+    "@types/react-native": "^0.57.42",
+    "@types/react-test-renderer": "^16.8.1",
+    "@typescript-eslint/eslint-plugin": "^1.5.0",
+    "@typescript-eslint/parser": "^1.5.0",
+    "babel-jest": "^24.5.0",
+    "concurrently": "^4.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.5.0",
+    "metro-react-native-babel-preset": "^0.53.1",
+    "react-test-renderer": "16.8.3",
+    "typescript": "^3.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

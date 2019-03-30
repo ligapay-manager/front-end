@@ -1,0 +1,3 @@
+rootProject.name = 'ligapay'
+
+include ':app'
