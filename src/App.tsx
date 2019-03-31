@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import styled, { css } from "styled-components/native";
+import { Animated, Easing } from 'react-native';
 
+import styled from "styled-components/native";
+import Button from "./components/Button";
 
 const Container = styled.View`
   background-color: #178c58;
@@ -10,21 +11,66 @@ const Container = styled.View`
   align-items: center;
   height: 100%;
 `
-const Title = styled.Text`
+const Title = Animated.createAnimatedComponent(styled.Text`
   color: #c6c013;
-  margin: 0px 0px 10px 0px
-  font-size: 50px;
-  border-radius: 50;
-  padding: 5px 20px;
+  font-size: 60px;
   font-family: 'Pacifico-Regular';
+  margin-bottom: 40px;
+  padding: 0px 10px;
+`)
+
+const Input = styled.TextInput`
+  background-color: #fff;
+  height: 38px;
+  border-radius: 2px;
+  elevation: 2px;
+  padding: 0px 10px;
+  width: 210px;
+  margin-bottom: 10px;
+  text-align: center;
 `
 
 export default class App extends Component<Props> {
+  titlePosition: Animated.Value;
+  titleFade: Animated.Value;
+
+  constructor(props: Props) {
+    super(props)
+
+    this.titlePosition = new Animated.Value(-40)
+    this.titleFade = new Animated.Value(0)
+  }
+
+  componentDidMount() {
+    Animated.parallel([
+      Animated.timing(this.titlePosition, {
+        toValue: 0,
+        duration: 800,
+        easing: Easing.ease,
+        useNativeDriver: true
+      }),
+      Animated.timing(this.titleFade, {
+        toValue: 1,
+        duration: 800,
+        easing: Easing.ease,
+        useNativeDriver: true
+      })
+    ]).start()
+  }
+
   render() {
+    const { titleFade, titlePosition } = this
+
     return (
       <Container>
-        <Title> Liga Pay </Title>
-      </Container>
+        <Title style={{ opacity: titleFade, transform: [{ translateY: titlePosition }] }}>
+          LigaPay
+        </Title>
+
+        <Input placeholder={'Usuário'} />
+        <Input placeholder={'Senha'} secureTextEntry />
+        <Button title={'Login'} />
+      </Container >
     );
   }
 }
