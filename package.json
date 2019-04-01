@@ -42,12 +42,14 @@
     "preset": "react-native"
   },
   "husky": {
-    "pre-commit": "lint-staged"
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "linters": {
-      "*.{js,jsx}": [
-        "yarn lint",
+      "**/*.{js,jsx}": [
+        "eslint --fix",
         "git add"
       ]
     }

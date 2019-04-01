@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, Easing, View } from 'react-native';
+import { Animated, Easing } from 'react-native';
 
 import styled from 'styled-components/native';
 import Button from './components/Button';
