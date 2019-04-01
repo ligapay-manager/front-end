@@ -12,6 +12,7 @@ const Container = styled.View`
   align-items: center;
   height: 100%;
 `;
+
 const Title = Animated.createAnimatedComponent(styled.Text`
   color: #c6c013;
   font-size: 60px;
@@ -50,31 +51,26 @@ export default class App extends Component {
     Animated.parallel([
       Animated.timing(this.animations.titlePosition, {
         toValue: 0,
-        duration: 800,
         easing: Easing.ease,
         useNativeDriver: true
       }),
       Animated.timing(this.animations.fade, {
         toValue: 1,
-        duration: 800,
         easing: Easing.ease,
         useNativeDriver: true
       }),
       Animated.timing(this.animations.usernamePosition, {
         toValue: 0,
-        duration: 800,
         easing: Easing.ease,
         useNativeDriver: true
       }),
       Animated.timing(this.animations.passwordPosition, {
         toValue: 0,
-        duration: 800,
         easing: Easing.ease,
         useNativeDriver: true
       }),
       Animated.timing(this.animations.buttonPosition, {
         toValue: 0,
-        duration: 800,
         easing: Easing.ease,
         useNativeDriver: true
       })
@@ -93,7 +89,6 @@ export default class App extends Component {
 
     return (
       <Container>
-
         <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>
           LigaPay
         </Title>
