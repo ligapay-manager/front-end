@@ -3,7 +3,7 @@ import { Animated, Easing } from 'react-native';
 import { connect } from 'react-redux';
 
 import styled from 'styled-components/native';
-import Button from './components/Button';
+import Button from '../components/Button';
 
 
 const Container = styled.View`
@@ -88,6 +88,8 @@ class App extends Component {
       usernamePosition
     } = this.animations;
 
+    const { navigation: { navigate } } = this.props;
+
     return (
       <Container>
         <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>
@@ -108,6 +110,7 @@ class App extends Component {
         <AnimatedButton
           style={{ opacity: fade, transform: [{ translateY: buttonPosition }] }}
           title="Login"
+          onPress={() => navigate('Example')}
         />
       </Container>
     );

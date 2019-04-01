@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 import { name as appName } from './app.json';
 
 import store from './src/redux/store';
-import App from './src/App';
+import Routes from './src/routes';
 
 
 const AppStart = () => (
   <Provider store={store}>
-    <App />
+    <Routes />
   </Provider>
 );
 
