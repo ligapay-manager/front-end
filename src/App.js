@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, Easing } from 'react-native';
+import { connect } from 'react-redux';
 
 import styled from 'styled-components/native';
 import Button from './components/Button';
@@ -34,7 +35,7 @@ const Input = Animated.createAnimatedComponent(styled.TextInput`
 
 const AnimatedButton = Animated.createAnimatedComponent(Button);
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -112,3 +113,8 @@ export default class App extends Component {
     );
   }
 }
+const mapStateToProps = ({ appReducer }) => ({
+  example: appReducer.example
+});
+
+export default connect(mapStateToProps)(App);
