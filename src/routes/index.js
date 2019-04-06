@@ -1,4 +1,4 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
 import Login from '../screens/Login';
 import Example from '../screens/Example';
@@ -16,5 +16,5 @@ const routes = {
 
 
 export default createAppContainer(
-  createStackNavigator(routes, { initialRouteName: 'Login' })
+  createSwitchNavigator(routes, { initialRouteName: 'Login' })
 );

@@ -7,8 +7,8 @@ import Button from '../components/Button';
 
 
 const Container = styled.View`
-  background-color: #178c58;
   display: flex;
+  background-color: #178c58;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -26,7 +26,7 @@ const Input = Animated.createAnimatedComponent(styled.TextInput`
   background-color: #fff;
   height: 38px;
   border-radius: 2px;
-  elevation: 2px;
+  elevation: 1px;
   padding: 0px 10px;
   width: 210px;
   margin-bottom: 10px;
@@ -80,13 +80,7 @@ class App extends Component {
   }
 
   render() {
-    const {
-      fade,
-      titlePosition,
-      buttonPosition,
-      passwordPosition,
-      usernamePosition
-    } = this.animations;
+    const { fade, titlePosition, buttonPosition, passwordPosition, usernamePosition } = this.animations;
 
     const { navigation: { navigate } } = this.props;
 
@@ -109,8 +103,8 @@ class App extends Component {
 
         <AnimatedButton
           style={{ opacity: fade, transform: [{ translateY: buttonPosition }] }}
-          title="Login"
           onPress={() => navigate('Example')}
+          title="Entrar"
         />
       </Container>
     );

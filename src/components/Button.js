@@ -11,12 +11,12 @@ const ButtonContainer = styled.View`
     align-items: center;
     width: 210px;
     padding: 5px 10px;
-    border-radius: 4px;
+    border-radius: 2px;
     height: 38px;
 
     background-color: ${props => (props.outline ? 'transparent' : '#034732')};
     border: ${props => (props.outline ? '1px solid #034732;' : '0px')};
-    elevation: ${props => (props.outline ? '0px' : '2px')};
+    elevation: ${props => (props.outline ? '0px' : '1px')};
 `;
 
 const ButtonText = styled.Text`
@@ -25,9 +25,7 @@ const ButtonText = styled.Text`
 
 class Button extends React.Component {
   render() {
-    const {
-      outline, style, title, ...defaults
-    } = this.props;
+    const { outline, style, title, ...defaults } = this.props;
 
     return (
       <TouchableNativeFeedback

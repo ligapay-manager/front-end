@@ -1,7 +1,7 @@
 // test/app-spec-jsx
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from '../src/App';
+import App from '../src/screens/Login';
 
 // needed for animations
 jest.useFakeTimers();
