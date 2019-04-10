@@ -11,11 +11,11 @@ const ButtonContainer = styled.View`
     align-items: center;
     width: 210px;
     padding: 5px 10px;
-    border-radius: 2px;
-    height: 38px;
-
-    background-color: ${props => (props.outline ? 'transparent' : '#034732')};
-    border: ${props => (props.outline ? '1px solid #034732;' : '0px')};
+    
+    border-radius: ${({ theme }) => theme.constants.borderRadius};
+    height: ${props => props.height || '38'}px;
+    background-color: ${({ theme }) => '#14996F' || theme.colors.darkGreen};
+    border: ${props => (props.outline ? `1px solid ${props.theme.colors.darkGreen}` : '0px')};
     elevation: ${props => (props.outline ? '0px' : '1px')};
 `;
 

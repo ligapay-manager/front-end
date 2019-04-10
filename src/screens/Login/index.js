@@ -1,41 +1,16 @@
 import React, { Component } from 'react';
-import { Animated, Easing } from 'react-native';
+import { Animated, Easing, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
-import styled from 'styled-components/native';
-import Button from '../components/Button';
+import Button from '../../components/Button';
+import Container from './Container';
+import Title from './Title';
+import Input from './Input';
 
-
-const Container = styled.View`
-  display: flex;
-  background-color: #178c58;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
-
-const Title = Animated.createAnimatedComponent(styled.Text`
-  color: #c6c013;
-  font-size: 60px;
-  font-family: 'Pacifico-Regular';
-  margin-bottom: 40px;
-  padding: 0px 10px;
-`);
-
-const Input = Animated.createAnimatedComponent(styled.TextInput`
-  background-color: #fff;
-  height: 38px;
-  border-radius: 2px;
-  elevation: 1px;
-  padding: 0px 10px;
-  width: 210px;
-  margin-bottom: 10px;
-  text-align: center;
-`);
 
 const AnimatedButton = Animated.createAnimatedComponent(Button);
 
-class App extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -81,11 +56,11 @@ class App extends Component {
 
   render() {
     const { fade, titlePosition, buttonPosition, passwordPosition, usernamePosition } = this.animations;
-
     const { navigation: { navigate } } = this.props;
 
     return (
       <Container>
+        <StatusBar animated backgroundColor="#14995D" />
         <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>
           LigaPay
         </Title>
@@ -104,6 +79,7 @@ class App extends Component {
         <AnimatedButton
           style={{ opacity: fade, transform: [{ translateY: buttonPosition }] }}
           onPress={() => navigate('Example')}
+          color="#14996F"
           title="Entrar"
         />
       </Container>
@@ -114,4 +90,4 @@ const mapStateToProps = ({ appReducer }) => ({
   example: appReducer.example
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(Login);

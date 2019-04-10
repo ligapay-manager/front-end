@@ -1,3 +1,5 @@
+import React from 'react';
+import { StatusBar } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
 import Login from '../screens/Login';
@@ -14,7 +16,13 @@ const routes = {
   Example
 };
 
-
-export default createAppContainer(
+const NavigationContainer = createAppContainer(
   createSwitchNavigator(routes, { initialRouteName: 'Login' })
 );
+
+const Root = props => (
+  <NavigationContainer {...props}>
+    <StatusBar animated backgroundColor="#14995D" />
+  </NavigationContainer>
+);
+export default Root;
