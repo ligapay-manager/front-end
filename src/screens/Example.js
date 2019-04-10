@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text, StatusBar } from 'react-native';
+
+import View from '../components/View';
 
 
 export default () => (
   <View>
+    <StatusBar animated backgroundColor="#fff" />
     <Text>Hello Example</Text>
   </View>
 );
