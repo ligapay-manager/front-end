@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Animated, Easing, StatusBar, ActivityIndicator, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Button from '../../components/Button';
 import Container from './Container';
@@ -19,7 +20,8 @@ class Login extends Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      loading: true
     };
 
     this.animationValues = {
@@ -59,65 +61,83 @@ class Login extends Component {
     ]);
   }
 
-  componentDidMount() {
-    this.animate.start();
+  async componentDidMount() {
+    const [token, refreshToken] = await AsyncStorage.multiGet(['token', 'refreshToken']);
+
+    if (token[1] && refreshToken[1]) {
+      const { navigation } = this.props;
+
+      navigation.navigate('Example');
+    } else {
+      this.setState(prev => ({ ...prev, loading: false }));
+      this.animate.start();
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
-  handleLogin({ token, refreshToken }) {
-    const { navigation } = this.props;
+  async handleLogin({ login: { token, refreshToken } }) {
+    await AsyncStorage.multiSet([['token', token], ['refreshToken', refreshToken]]);
 
+    const { navigation } = this.props;
     navigation.navigate('Example');
   }
 
   render() {
     const { fade, titlePosition, buttonPosition, passwordPosition, usernamePosition } = this.animationValues;
-    const { email, password } = this.state;
+    const { email, password, loading: loadingStorage } = this.state;
 
     return (
       <Container>
         <StatusBar animated backgroundColor="#14995D" />
-        <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>LigaPay</Title>
 
-        <Input
-          style={{ opacity: fade, transform: [{ translateX: usernamePosition }] }}
-          onChangeText={e => this.setState(prev => ({ ...prev, email: e }))}
-          value={email}
-          placeholder="Email"
-        />
+        {loadingStorage ? (
+          <ActivityIndicator animating size="large" color="#c6c013" />
+        ) : (
+          <Fragment>
+            <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>LigaPay</Title>
 
-        <Input
-          style={{ opacity: fade, transform: [{ translateX: passwordPosition }] }}
-          onChangeText={e => this.setState(prev => ({ ...prev, password: e }))}
-          value={password}
-          placeholder="Senha"
-          secureTextEntry
-        />
+            <Input
+              style={{ opacity: fade, transform: [{ translateX: usernamePosition }] }}
+              onChangeText={e => this.setState(prev => ({ ...prev, email: e }))}
+              value={email}
+              placeholder="Email"
+            />
 
-        <Mutation
-          mutation={loginGql}
-          variables={{ value: { email, password } }}
-          onCompleted={data => this.handleLogin(data)}
-        >
-          {(login, { loading }) => (
-            <AnimatedButton
-              style={{ opacity: fade, transform: [{ translateY: buttonPosition }] }}
-              onPress={() => login()}
-              color="#14996F"
-              title="Entrar"
+            <Input
+              style={{ opacity: fade, transform: [{ translateX: passwordPosition }] }}
+              onChangeText={e => this.setState(prev => ({ ...prev, password: e }))}
+              value={password}
+              placeholder="Senha"
+              secureTextEntry
+            />
+
+            <Mutation
+              mutation={loginGql}
+              variables={{ value: { email: email.trim().toLowerCase(), password } }}
+              onCompleted={data => this.handleLogin(data)}
             >
-              {loading ? (
-                <ActivityIndicator animating color="#c6c013" />
-              ) : (
-                <Text style={{ color: '#fff' }}>Entrar</Text>
+              {(login, { loading }) => (
+                <AnimatedButton
+                  style={{ opacity: fade, transform: [{ translateY: buttonPosition }] }}
+                  onPress={!loading ? login : () => {}}
+                  color="#14996F"
+                  title="Entrar"
+                >
+                  {loading ? (
+                    <ActivityIndicator animating color="#c6c013" />
+                  ) : (
+                    <Text style={{ color: '#fff' }}>Entrar</Text>
+                  )}
+                </AnimatedButton>
               )}
-            </AnimatedButton>
-          )}
-        </Mutation>
+            </Mutation>
+          </Fragment>
+        )}
       </Container>
     );
   }
 }
+
 const mapStateToProps = ({ appReducer }) => ({
   example: appReducer.example
 });
