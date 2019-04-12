@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { Animated, Easing, StatusBar, ActivityIndicator } from 'react-native';
+import React, { Component } from 'react';
+import { Animated, Easing, StatusBar, ActivityIndicator, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
 
@@ -59,6 +59,10 @@ class Login extends Component {
     ]);
   }
 
+  componentDidMount() {
+    this.animate.start();
+  }
+
   // eslint-disable-next-line no-unused-vars
   handleLogin({ token, refreshToken }) {
     const { navigation } = this.props;
@@ -73,47 +77,42 @@ class Login extends Component {
     return (
       <Container>
         <StatusBar animated backgroundColor="#14995D" />
+        <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>LigaPay</Title>
+
+        <Input
+          style={{ opacity: fade, transform: [{ translateX: usernamePosition }] }}
+          onChangeText={e => this.setState(prev => ({ ...prev, email: e }))}
+          value={email}
+          placeholder="Email"
+        />
+
+        <Input
+          style={{ opacity: fade, transform: [{ translateX: passwordPosition }] }}
+          onChangeText={e => this.setState(prev => ({ ...prev, password: e }))}
+          value={password}
+          placeholder="Senha"
+          secureTextEntry
+        />
 
         <Mutation
           mutation={loginGql}
           variables={{ value: { email, password } }}
           onCompleted={data => this.handleLogin(data)}
         >
-          {(login, { loading }) => {
-            if (loading) {
-              return <ActivityIndicator animating size="large" color="#c6c013" />;
-            }
-
-            this.animate.start();
-
-            return (
-              <Fragment>
-                <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>LigaPay</Title>
-
-                <Input
-                  style={{ opacity: fade, transform: [{ translateX: usernamePosition }] }}
-                  onChangeText={e => this.setState(prev => ({ ...prev, email: e }))}
-                  value={email}
-                  placeholder="Email"
-                />
-
-                <Input
-                  style={{ opacity: fade, transform: [{ translateX: passwordPosition }] }}
-                  onChangeText={e => this.setState(prev => ({ ...prev, password: e }))}
-                  value={password}
-                  placeholder="Senha"
-                  secureTextEntry
-                />
-
-                <AnimatedButton
-                  style={{ opacity: fade, transform: [{ translateY: buttonPosition }] }}
-                  onPress={() => login()}
-                  color="#14996F"
-                  title="Entrar"
-                />
-              </Fragment>
-            );
-          }}
+          {(login, { loading }) => (
+            <AnimatedButton
+              style={{ opacity: fade, transform: [{ translateY: buttonPosition }] }}
+              onPress={() => login()}
+              color="#14996F"
+              title="Entrar"
+            >
+              {loading ? (
+                <ActivityIndicator animating color="#c6c013" />
+              ) : (
+                <Text style={{ color: '#fff' }}>Entrar</Text>
+              )}
+            </AnimatedButton>
+          )}
         </Mutation>
       </Container>
     );

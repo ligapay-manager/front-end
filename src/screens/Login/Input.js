@@ -10,7 +10,6 @@ const Input = Animated.createAnimatedComponent(styled.TextInput`
   padding: 0px 10px;
   width: 210px;
   margin-bottom: 10px;
-  text-align: center;
 `);
 
 export default Input;

@@ -1,7 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import { TouchableNativeFeedback } from 'react-native';
-
 import styled from 'styled-components/native';
 
 
@@ -19,18 +18,14 @@ const ButtonContainer = styled.View`
   elevation: ${props => (props.outline ? '0px' : '1px')};
 `;
 
-const ButtonText = styled.Text`
-  color: #fff;
-`;
-
 class Button extends React.Component {
   render() {
-    const { outline, style, title, ...defaults } = this.props;
+    const { outline, style, title, loading, children, ...defaults } = this.props;
 
     return (
       <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} {...defaults}>
         <ButtonContainer outline={outline} style={style}>
-          <ButtonText>{title}</ButtonText>
+          {children}
         </ButtonContainer>
       </TouchableNativeFeedback>
     );
