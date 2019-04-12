@@ -16,9 +16,7 @@ const routes = {
   Example
 };
 
-const NavigationContainer = createAppContainer(
-  createSwitchNavigator(routes, { initialRouteName: 'Login' })
-);
+const NavigationContainer = createAppContainer(createSwitchNavigator(routes, { initialRouteName: 'Login' }));
 
 const Root = props => (
   <NavigationContainer {...props}>
