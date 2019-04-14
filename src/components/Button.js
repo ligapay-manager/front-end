@@ -15,7 +15,7 @@ const ButtonContainer = styled.View`
   height: ${props => props.height || '38'}px;
   background-color: ${({ theme }) => '#14996F' || theme.colors.darkGreen};
   border: ${props => (props.outline ? `1px solid ${props.theme.colors.darkGreen}` : '0px')};
-  elevation: ${props => (props.outline ? '0px' : '1px')};
+  elevation: ${props => (props.outline ? '0px' : '2px')};
 `;
 
 class Button extends React.Component {

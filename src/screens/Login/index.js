@@ -67,7 +67,7 @@ class Login extends Component {
     if (token[1] && refreshToken[1]) {
       const { navigation } = this.props;
 
-      navigation.navigate('Example');
+      navigation.navigate('App');
     } else {
       this.setState(prev => ({ ...prev, loading: false }));
       this.animate.start();
@@ -79,7 +79,7 @@ class Login extends Component {
     await AsyncStorage.multiSet([['token', token], ['refreshToken', refreshToken]]);
 
     const { navigation } = this.props;
-    navigation.navigate('Example');
+    navigation.navigate('App');
   }
 
   render() {
