@@ -6,10 +6,22 @@ import View from '../components/View';
 import Button from '../components/Button';
 
 
-export default () => (
-  <View>
-    <Button title="Sair" onPress={() => AsyncStorage.multiRemove(['token', 'refreshToken'])}>
-      <Text style={{ color: '#fff' }}>Sair</Text>
-    </Button>
-  </View>
-);
+export default class Example extends React.Component {
+  handleLogout = async () => {
+    const { navigation } = this.props;
+
+    await AsyncStorage.multiRemove(['token', 'refreshToken']);
+
+    navigation.navigate('Login');
+  };
+
+  render() {
+    return (
+      <View>
+        <Button title="Sair" onPress={this.handleLogout}>
+          <Text style={{ color: '#fff' }}>Sair</Text>
+        </Button>
+      </View>
+    );
+  }
+}

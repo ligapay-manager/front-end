@@ -1,17 +1,12 @@
 import { createSwitchNavigator } from 'react-navigation';
 
 import App from './app';
-import Login from '../screens/Login';
+import Auth from './auth';
 
 
 const rootRoutes = {
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null
-    }
-  },
+  Auth,
   App
 };
 
-export default createSwitchNavigator(rootRoutes, { initialRouteName: 'Login' });
+export default createSwitchNavigator(rootRoutes, { initialRouteName: 'Auth' });
