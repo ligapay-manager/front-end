@@ -1,6 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import appReducer from './reducers/appReducer';
+import { composeWithDevTools } from 'remote-redux-devtools';
+
+import user from './reducers/user';
 
 
-export default createStore(combineReducers({ appReducer }), applyMiddleware(thunk));
+export default createStore(combineReducers({ user }), composeWithDevTools(applyMiddleware(thunk)));

@@ -10,6 +10,7 @@ import Container from './Container';
 import Title from './Title';
 import Input from './Input';
 
+import * as actions from '../../redux/reducers/user/actions';
 import loginGql from '../../graphql/mutation/login';
 
 
@@ -62,9 +63,10 @@ class Login extends Component {
   }
 
   handleLogin = async ({ login: { token, refreshToken } }) => {
-    const { navigation } = this.props;
+    const { navigation, setCredentials } = this.props;
 
     await AsyncStorage.multiSet([['token', token], ['refreshToken', refreshToken]]);
+    setCredentials(token, refreshToken);
 
     navigation.navigate('App');
   };
@@ -118,8 +120,11 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = ({ appReducer }) => ({
-  example: appReducer.example
+const mapDispatchToProps = dispatch => ({
+  setCredentials: (token, refreshToken) => dispatch(actions.setCredentials(token, refreshToken))
 });
 
-export default connect(mapStateToProps)(Login);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);

@@ -25,6 +25,7 @@
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "remote-redux-devtools": "^0.5.16",
     "styled-components": "^4.2.0"
   },
   "rnpm": {
