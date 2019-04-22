@@ -31,6 +31,14 @@ const appRoutes = {
       )
     }
   },
+  Notifications: {
+    screen: Example,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Icon name={`${!focused ? 'bell-outline' : 'bell-ring'}`} size={20} color={tintColor} />
+      )
+    }
+  },
   Profile: {
     screen: Example,
     navigationOptions: {
@@ -42,10 +50,11 @@ const appRoutes = {
 };
 
 export default createMaterialTopTabNavigator(appRoutes, {
-  swipeEnabled: true,
+  swipeEnabled: false,
   initialRouteName: 'Profile',
   tabBarPosition: 'bottom',
   optimizationsEnabled: true,
+  order: ['Leagues', 'Wallet', 'Ranking', 'Notifications', 'Profile'],
   tabBarOptions: {
     showIcon: true,
     showLabel: false,
