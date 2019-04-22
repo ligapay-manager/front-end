@@ -3,7 +3,6 @@ import { Animated, Easing, StatusBar, ActivityIndicator, Text } from 'react-nati
 
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import Button from '../../components/Button';
 import Container from './Container';
@@ -65,9 +64,7 @@ class Login extends Component {
   handleLogin = async ({ login: { token, refreshToken } }) => {
     const { navigation, setCredentials } = this.props;
 
-    await AsyncStorage.multiSet([['token', token], ['refreshToken', refreshToken]]);
     setCredentials(token, refreshToken);
-
     navigation.navigate('App');
   };
 
@@ -120,9 +117,9 @@ class Login extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setCredentials: (token, refreshToken) => dispatch(actions.setCredentials(token, refreshToken))
-});
+const mapDispatchToProps = {
+  setCredentials: actions.setCredentials
+};
 
 export default connect(
   null,
