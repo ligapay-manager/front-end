@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 
 import Example from '../screens/Example';
+import Profile from '../screens/Profile';
 import colors from '../theme/colors';
 
 
@@ -40,7 +41,7 @@ const appRoutes = {
     }
   },
   Profile: {
-    screen: Example,
+    screen: Profile,
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => (
         <Icon name={`account-circle${!focused ? '-outline' : ''}`} size={20} color={tintColor} />

@@ -3,13 +3,13 @@ import { Animated, Easing, StatusBar, ActivityIndicator, Text } from 'react-nati
 
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import Button from '../../components/Button';
 import Container from './Container';
 import Title from './Title';
 import Input from './Input';
 
+import * as actions from '../../redux/reducers/user/actions';
 import loginGql from '../../graphql/mutation/login';
 
 
@@ -62,10 +62,9 @@ class Login extends Component {
   }
 
   handleLogin = async ({ login: { token, refreshToken } }) => {
-    const { navigation } = this.props;
+    const { navigation, setCredentials } = this.props;
 
-    await AsyncStorage.multiSet([['token', token], ['refreshToken', refreshToken]]);
-
+    setCredentials(token, refreshToken);
     navigation.navigate('App');
   };
 
@@ -118,8 +117,11 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = ({ appReducer }) => ({
-  example: appReducer.example
-});
+const mapDispatchToProps = {
+  setCredentials: actions.setCredentials
+};
 
-export default connect(mapStateToProps)(Login);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);

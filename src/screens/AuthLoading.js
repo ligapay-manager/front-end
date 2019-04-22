@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { ActivityIndicator } from 'react-native';
 
 import styled from 'styled-components/native';
-import AsyncStorage from '@react-native-community/async-storage';
 
+import * as actions from '../redux/reducers/user/actions';
 import colors from '../theme/colors';
 
 
@@ -17,10 +18,9 @@ const Container = styled.View`
 
 class AuthLoading extends React.Component {
   async componentDidMount() {
-    const { navigation } = this.props;
-    const [token, refreshToken] = await AsyncStorage.multiGet(['token', 'refreshToken']);
+    const { token, refreshToken, navigation } = this.props;
 
-    if (token[1] && refreshToken[1]) {
+    if (token && refreshToken) {
       navigation.navigate('App');
     } else {
       navigation.navigate('Login');
@@ -36,4 +36,16 @@ class AuthLoading extends React.Component {
   }
 }
 
-export default AuthLoading;
+const mapDispatchToProps = {
+  setCredentials: actions.setCredentials
+};
+
+const mapStateToProps = ({ user }) => ({
+  token: user.token,
+  refreshToken: user.refreshToken
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AuthLoading);
