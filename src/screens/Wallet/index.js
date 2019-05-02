@@ -7,7 +7,7 @@ import View from '../../components/View';
 
 
 const Wallet = (props) => {
-  //const { token } = props;
+  const { token } = props;
 
   return (
     <View>

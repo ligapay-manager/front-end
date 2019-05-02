@@ -29,7 +29,7 @@ const appRoutes = {
     }
   },
   Leagues: {
-    screen: Example,
+    screen: Profile,
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => (
         <Icon name={`shield-account${!focused ? '-outline' : ''}`} size={25} color={tintColor} />

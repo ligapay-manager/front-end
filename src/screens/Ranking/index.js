@@ -7,7 +7,7 @@ import View from '../../components/View';
 
 
 const Ranking = (props) => {
-  //const { token } = props;
+  const { token } = props;
 
   return (
     <View>
