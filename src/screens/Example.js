@@ -27,7 +27,11 @@ class Example extends React.Component {
   }
 }
 
+const mapDispatchToProps = {
+  clearCredentials: actions.clearCredentials
+};
+
 export default connect(
   null,
-  { clearCredentials: actions.clearCredentials }
+  mapDispatchToProps
 )(Example);

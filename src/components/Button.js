@@ -8,11 +8,11 @@ const ButtonContainer = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 210px;
+  width: 80%;
   padding: 5px 10px;
 
   border-radius: ${({ theme }) => theme.constants.borderRadius};
-  height: ${props => props.height || '38'}px;
+  height: ${props => props.height || '50'}px;
   background-color: ${({ theme }) => '#14996F' || theme.colors.darkGreen};
   border: ${props => (props.outline ? `1px solid ${props.theme.colors.darkGreen}` : '0px')};
   elevation: ${props => (props.outline ? '0px' : '2px')};
