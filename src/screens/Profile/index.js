@@ -7,33 +7,39 @@ import Button from '../../components/Button';
 
 import * as actions from '../../redux/reducers/user/actions';
 
-const mapStateToProps = ({ user }) => ({
-  token: user.token
-});
 
-const mapDispatchToProps = { 
-  clearCredentials: actions.clearCredentials
-}
+class Profile extends React.Component {
+  handleLogout = async () => {
+    const { navigation, clearCredentials } = this.props;
 
-const Profile = (props) => {
-  const { token } = props;
-
-  const handleLogout = async () => {
-    const { navigation, clearCredentials } = props;
-  
     clearCredentials();
     navigation.navigate('Login');
   };
 
-  return (
-    <View>
-      <Text>Profile</Text>
-      <Text>{ token }</Text>
-      <Button title="Sair" onPress={handleLogout}>
-        <Text style={{ color: '#fff' }}>Sair</Text>
-      </Button>
-    </View>
-  );
+  render() {
+    const { token } = this.props;
+
+    return (
+      <View>
+        <Text>Profile</Text>
+        <Text>{token}</Text>
+        <Button title="Sair" onPress={this.handleLogout}>
+          <Text style={{ color: '#fff' }}>Sair</Text>
+        </Button>
+      </View>
+    );
+  }
+}
+
+const mapStateToProps = ({ user }) => ({
+  token: user.token
+});
+
+const mapDispatchToProps = {
+  clearCredentials: actions.clearCredentials
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);
