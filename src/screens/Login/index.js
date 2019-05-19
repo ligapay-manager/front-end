@@ -10,7 +10,7 @@ import Title from './Title';
 import Input from './Input';
 
 import * as actions from '../../redux/reducers/user/actions';
-import loginGql from '../../graphql/mutation/login';
+import Mutations from '../../graphql/mutation';
 
 
 const AnimatedButton = Animated.createAnimatedComponent(Button);
@@ -61,10 +61,10 @@ class Login extends Component {
     this.animate.start();
   }
 
-  handleLogin = async ({ login: { token, refreshToken } }) => {
+  handleLogin = async ({ login: { token } }) => {
     const { navigation, setCredentials } = this.props;
 
-    setCredentials(token, refreshToken);
+    setCredentials(token);
     navigation.navigate('App');
   };
 
@@ -93,8 +93,8 @@ class Login extends Component {
         />
 
         <Mutation
-          mutation={loginGql}
-          variables={{ value: { email: email.trim().toLowerCase(), password } }}
+          mutation={Mutations.LOGIN}
+          variables={{ email: email.trim().toLowerCase(), password }}
           onCompleted={this.handleLogin}
         >
           {(login, { loading }) => (

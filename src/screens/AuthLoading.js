@@ -18,9 +18,9 @@ const Container = styled.View`
 
 class AuthLoading extends React.Component {
   async componentDidMount() {
-    const { token, refreshToken, navigation } = this.props;
+    const { token, navigation } = this.props;
 
-    if (token && refreshToken) {
+    if (token) {
       navigation.navigate('App');
     } else {
       navigation.navigate('Login');

@@ -1,9 +1,9 @@
 export const SET_CREDENTIALS = 'SET_CREDENTIALS';
 export const CLEAR_CREDENTIALS = 'CLEAR_CREDENTIALS';
 
-export const setCredentials = (token, refreshToken) => ({
+export const setCredentials = token => ({
   type: SET_CREDENTIALS,
-  payload: { token, refreshToken }
+  payload: { token }
 });
 
 export const clearCredentials = () => ({

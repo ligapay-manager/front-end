@@ -4,7 +4,6 @@ import { createMaterialTopTabNavigator } from 'react-navigation';
 
 import colors from '../theme/colors';
 
-import Example from '../screens/Example';
 import Profile from '../screens/Profile';
 import Wallet from '../screens/Wallet';
 import Ranking from '../screens/Ranking';
@@ -56,9 +55,10 @@ const appRoutes = {
 
 export default createMaterialTopTabNavigator(appRoutes, {
   swipeEnabled: false,
-  initialRouteName: 'Ranking',
+  initialRouteName: 'Profile',
   tabBarPosition: 'bottom',
   optimizationsEnabled: true,
+  animationEnabled: false,
   order: ['Leagues', 'Wallet', 'Ranking', 'Notifications', 'Profile'],
   tabBarOptions: {
     showIcon: true,

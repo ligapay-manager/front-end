@@ -2,10 +2,9 @@ import gql from 'graphql-tag';
 
 
 export default gql`
-  mutation($value: LoginInput!) {
-    login(info: $value) {
+  mutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
       token
-      refreshToken
     }
   }
 `;

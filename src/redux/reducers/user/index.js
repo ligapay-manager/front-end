@@ -2,16 +2,15 @@ import { SET_CREDENTIALS, CLEAR_CREDENTIALS } from './actions';
 
 
 const initialState = {
-  token: '',
-  refreshToken: ''
+  token: ''
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CREDENTIALS: {
-      const { token, refreshToken } = action.payload;
+      const { token } = action.payload;
 
-      return { ...state, token, refreshToken };
+      return { ...state, token };
     }
 
     case CLEAR_CREDENTIALS:
