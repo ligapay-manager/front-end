@@ -8,9 +8,9 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CREDENTIALS: {
-      const { token } = action.payload;
+      const { token, wallet, team, id } = action.payload;
 
-      return { ...state, token };
+      return { ...state, token, wallet, team, id };
     }
 
     case CLEAR_CREDENTIALS:

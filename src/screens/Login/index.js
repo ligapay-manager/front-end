@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, Easing, StatusBar, ActivityIndicator, Text } from 'react-native';
+import { Animated, Easing, StatusBar, ActivityIndicator, Text, ToastAndroid } from 'react-native';
 
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
@@ -61,11 +61,17 @@ class Login extends Component {
     this.animate.start();
   }
 
-  handleLogin = async ({ login: { token } }) => {
+  handleLogin = async ({ login: { token, user, info } }) => {
     const { navigation, setCredentials } = this.props;
+    const { team, wallet } = user;
 
-    setCredentials(token);
+    setCredentials({ token, id: user.id, wallet, team });
+    ToastAndroid.show(info, ToastAndroid.SHORT);
     navigation.navigate('App');
+  };
+
+  handleError = async () => {
+    ToastAndroid.show('Um erro ocorreu. Tente novamente.', ToastAndroid.SHORT);
   };
 
   render() {
@@ -96,6 +102,7 @@ class Login extends Component {
           mutation={Mutations.LOGIN}
           variables={{ email: email.trim().toLowerCase(), password }}
           onCompleted={this.handleLogin}
+          onError={this.handleError}
         >
           {(login, { loading }) => (
             <AnimatedButton
