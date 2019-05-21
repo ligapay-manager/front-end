@@ -6,9 +6,13 @@ export default gql`
     me {
       id
       team {
+        id
         name
         avatar
         cartolaName
+      }
+      wallet {
+        id
       }
     }
   }
