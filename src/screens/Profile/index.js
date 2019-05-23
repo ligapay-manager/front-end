@@ -2,11 +2,8 @@
 import React from 'react';
 import { Text, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
-// import { Query } from 'react-apollo';
 import styled from 'styled-components/native';
 import * as actions from '../../redux/reducers/user/actions';
-
-// import Queries from '../../graphql/query';
 
 import Container from './Container';
 import Avatar from './Avatar';
