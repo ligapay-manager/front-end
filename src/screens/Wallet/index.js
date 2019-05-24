@@ -1,16 +1,32 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { Text, StatusBar, ActivityIndicator } from 'react-native';
+import { Text, StatusBar, ActivityIndicator, FlatList } from 'react-native';
 import { Query } from 'react-apollo';
 import { connect } from 'react-redux';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+import QRCode from 'react-native-qrcode';
 import moment from 'moment';
 
 import View from '../../components/View';
 import query from '../../graphql/query';
 
+
+const QRCodeContainer = styled(View)`
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  height: 200px;
+  width: 250px;
+  background-color: transparent;
+`;
+
+const WalletView = styled(View)`
+  background-color: #14995d;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Container = styled.View`
   justify-content: center;
@@ -23,15 +39,24 @@ const AmountContainer = styled.View`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  height: 50px;
+  width: 250px;
+  margin-top: 20px;
+  border-radius: 10px;
+  elevation: 4px;
+  background-color: #fff;
+`;
+
+const TransactionContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
   border-radius: 10px;
   height: 50px;
   width: 250px;
   elevation: 4px;
   background-color: #fff;
-`;
-
-const TransactionContainer = styled(AmountContainer)`
-  elevation: 0px;
   margin-top: 10px;
 `;
 
@@ -43,9 +68,10 @@ class Wallet extends React.Component {
 
   render() {
     const { amount, transactions } = this.state;
+    const { walletId } = this.props;
 
     return (
-      <View style={{ backgroundColor: '#14995D' }}>
+      <WalletView>
         <StatusBar animated backgroundColor="#043927" />
 
         <Query
@@ -62,33 +88,41 @@ class Wallet extends React.Component {
             return (
               <>
                 <Container>
+                  <QRCodeContainer>
+                    <QRCode value={walletId} size={130} bgColor="#14995D" fgColor="#fff" />
+                  </QRCodeContainer>
+
                   <AmountContainer>
-                    <Icon name="money-bill" size={20} />
-                    <Text style={{ color: 'black' }}>{(amount / 100).toFixed(2)}</Text>
+                    <Icon name="money-bill" size={20} color="#4F7942" />
+                    <Text>{(amount / 100).toFixed(2)}</Text>
                   </AmountContainer>
                 </Container>
 
-                <Container>
-                  {transactions.map(t => (
-                    <TransactionContainer key={t.id}>
-                      <Text style={{ color: 'grey' }}>{moment(t.createdAt).fromNow()}</Text>
-                      <Text style={{ color: t.amount >= 0 ? 'black' : 'red' }}>
-                        {(t.amount / 100).toFixed(2)}
+                <FlatList
+                  style={{ width: '100%' }}
+                  contentContainerStyle={{ alignItems: 'center', paddingBottom: 10 }}
+                  data={transactions}
+                  keyExtractor={item => item.id}
+                  renderItem={({ item }) => (
+                    <TransactionContainer>
+                      <Text style={{ color: 'grey' }}>{moment(item.createdAt).fromNow()}</Text>
+                      <Text style={{ color: item.amount >= 0 ? 'black' : 'red' }}>
+                        {(item.amount / 100).toFixed(2)}
                       </Text>
                     </TransactionContainer>
-                  ))}
-                </Container>
+                  )}
+                />
               </>
             );
           }}
         </Query>
-      </View>
+      </WalletView>
     );
   }
 }
 
 const mapStateToProps = ({ user }) => ({
-  token: user.token
+  walletId: user.walletId
 });
 
 export default connect(mapStateToProps)(Wallet);
