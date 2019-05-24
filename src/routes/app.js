@@ -54,7 +54,7 @@ const appRoutes = {
 };
 
 export default createMaterialTopTabNavigator(appRoutes, {
-  swipeEnabled: false,
+  // swipeEnabled: false,
   initialRouteName: 'Profile',
   tabBarPosition: 'bottom',
   optimizationsEnabled: true,
