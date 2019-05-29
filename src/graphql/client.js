@@ -1,5 +1,5 @@
 import ApolloClient from 'apollo-boost';
-import { store } from '../redux/store';
+import { store } from '../store';
 
 
 const apollo = new ApolloClient({

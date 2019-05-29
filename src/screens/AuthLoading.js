@@ -1,11 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ActivityIndicator } from 'react-native';
-
 import styled from 'styled-components/native';
-
-import * as actions from '../redux/reducers/user/actions';
-// import { Creators as actions } from '../store/ducks/user';
+import { Creators as actions } from '../store/ducks/user';
 import colors from '../theme/colors';
 
 

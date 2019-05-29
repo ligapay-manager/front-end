@@ -1,11 +1,8 @@
-/* eslint-disable react/no-unused-state */
 import React from 'react';
 import { Text, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components/native';
-// import { Creators as actions } from '../../store/ducks/user';
-import * as actions from '../../redux/reducers/user/actions';
-
+import { Creators as actions } from '../../store/ducks/user';
 import Container from './Container';
 import Avatar from './Avatar';
 import View from '../../components/View';

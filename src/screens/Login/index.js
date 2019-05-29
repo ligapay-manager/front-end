@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { Animated, Easing, StatusBar, ActivityIndicator, Text, ToastAndroid } from 'react-native';
-
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
-
 import Button from '../../components/Button';
 import Container from './Container';
 import Title from './Title';
 import Input from './Input';
-
-import * as actions from '../../redux/reducers/user/actions';
-// import { Creators as actions } from '../../store/ducks/user';
+import { Creators as actions } from '../../store/ducks/user';
 import Mutations from '../../graphql/mutation';
 
 
