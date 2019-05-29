@@ -1,31 +1,31 @@
 export const Types = {
-  SET: 'user/SET',
-  CLEAR: 'user/CLEAR',
+  SET_CREDENTIALS: 'user/SET_CREDENTIALS',
+  CLEAR_CREDENTIALS: 'user/CLEAR_CREDENTIALS'
 };
 
-const INITIAL_STATE = {
-  token: '',
+const initialState = {
+  token: ''
 };
 
-export default userReducer = (state = INITIAL_STATE, action) => {
+export default function user(state = initialState, action) {
   switch (action.type) {
-    case Types.SET: {
+    case Types.SET_CREDENTIALS: {
       const { token, wallet, team, id } = action.payload;
 
       return { ...state, token, wallet, team, id };
     }
 
-    case Types.CLEAR:
+    case Types.CLEAR_CREDENTIALS:
       return { ...initialState };
 
     default:
       return state;
   }
-};
+}
 
-export default Creators = {
-  setCredentials = ({ token, wallet, team, id }) => ({
-    type: Types.SET,
+export const Creators = {
+  setCredentials: ({ token, wallet, team, id }) => ({
+    type: Types.SET_CREDENTIALS,
     payload: {
       token,
       wallet: { id: wallet.id },
@@ -33,8 +33,8 @@ export default Creators = {
       id
     }
   }),
-  
-  clearCredentials = () => ({
-    type: Types.CLEAR
-  }),
-}
+
+  clearCredentials: () => ({
+    type: Types.CLEAR_CREDENTIALS
+  })
+};

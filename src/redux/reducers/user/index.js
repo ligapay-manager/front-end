@@ -5,7 +5,7 @@ const initialState = {
   token: ''
 };
 
-const userReducer = (state = initialState, action) => {
+export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case SET_CREDENTIALS: {
       const { token, wallet, team, id } = action.payload;
@@ -19,6 +19,4 @@ const userReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-export default userReducer;
+}

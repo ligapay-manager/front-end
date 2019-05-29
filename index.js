@@ -6,11 +6,12 @@ import { ThemeProvider } from 'styled-components/native';
 import { ApolloProvider } from 'react-apollo';
 import { name as appName } from './app.json';
 
-//import { store, persistor } from './src/redux/store';
-import { store, persistor } from './src/store';
+import { store, persistor } from './src/redux/store';
+// import { store, persistor } from './src/store';
 import theme from './src/theme';
 import Routes from './src/routes';
 import apolloClient from './src/graphql/client';
+
 
 const AppStart = () => (
   <ApolloProvider client={apolloClient}>
