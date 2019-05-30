@@ -11,66 +11,23 @@ import {
 } from 'react-native';
 import { Query } from 'react-apollo';
 import { connect } from 'react-redux';
-import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import ActionButton from 'react-native-action-button';
-
 import QRCode from 'react-native-qrcode';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 
-import View from '../../components/View';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
+import {
+  AmountContainer,
+  Container,
+  IconStyle,
+  QRCodeContainer,
+  WalletView,
+  TransactionContainer
+} from './components';
 import query from '../../graphql/query';
 
-
-const QRCodeContainer = styled.TouchableOpacity`
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  height: 200px;
-  width: 250px;
-  background-color: transparent;
-`;
-
-const WalletView = styled(View)`
-  background-color: #14995d;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Container = styled.View`
-  justify-content: center;
-  align-items: center;
-  height: 50%;
-`;
-
-const AmountContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  height: 50px;
-  width: 250px;
-  margin-top: 20px;
-  border-radius: 10px;
-  elevation: 4px;
-  background-color: #fff;
-`;
-
-const TransactionContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  height: 50px;
-  width: 250px;
-`;
-
-const IconStyle = styled(Icon)`
-  font-size: 20px;
-  color: #fff;
-  height: 22px;
-`;
 
 class Wallet extends React.Component {
   state = {
@@ -117,22 +74,26 @@ class Wallet extends React.Component {
                   </AmountContainer>
                 </Container>
 
-                <FlatList
-                  style={{ width: 250, backgroundColor: '#fff', borderRadius: 10, marginBottom: 10 }}
-                  contentContainerStyle={{ alignItems: 'center', marginBottom: 20 }}
-                  data={transactions}
-                  keyExtractor={item => item.id}
-                  renderItem={({ item }) => (
-                    <TouchableNativeFeedback>
-                      <TransactionContainer>
-                        <Text style={{ color: 'grey' }}>{moment(item.createdAt).fromNow()}</Text>
-                        <Text style={{ color: item.amount >= 0 ? 'black' : 'red' }}>
-                          {(item.amount / 100).toFixed(2)}
-                        </Text>
-                      </TransactionContainer>
-                    </TouchableNativeFeedback>
-                  )}
-                />
+                {transactions && (
+                  <FlatList
+                    style={{ backgroundColor: '#fff', borderRadius: 10, marginBottom: 10 }}
+                    contentContainerStyle={{ alignItems: 'center', marginBottom: 20 }}
+                    data={transactions}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => (
+                      <TouchableNativeFeedback>
+                        <TransactionContainer>
+                          <Text style={{ color: 'grey' }}>{moment(item.createdAt).fromNow()}</Text>
+                          <Text style={{ color: item.amount >= 0 ? 'black' : 'red' }}>
+                            R$
+                            {' '}
+                            {(item.amount / 100).toFixed(2)}
+                          </Text>
+                        </TransactionContainer>
+                      </TouchableNativeFeedback>
+                    )}
+                  />
+                )}
               </>
             );
           }}

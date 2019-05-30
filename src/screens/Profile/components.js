@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 
-const Container = styled.View`
+export const Container = styled.View`
   display: flex;
   width: 100%;
   height: 50%;
@@ -9,4 +9,7 @@ const Container = styled.View`
   align-items: center;
 `;
 
-export default Container;
+export const Avatar = styled.Image`
+  height: 150;
+  width: 120;
+`;

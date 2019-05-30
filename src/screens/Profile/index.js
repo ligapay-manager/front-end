@@ -3,8 +3,9 @@ import { Text, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components/native';
 import { Creators as actions } from '../../store/ducks/user';
-import Container from './Container';
-import Avatar from './Avatar';
+
+import { Avatar, Container } from './components';
+
 import View from '../../components/View';
 
 

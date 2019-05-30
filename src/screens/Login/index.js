@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Animated, Easing, StatusBar, ActivityIndicator, Text, ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
-import Button from '../../components/Button';
-import Container from './Container';
-import Title from './Title';
-import Input from './Input';
+
 import { Creators as actions } from '../../store/ducks/user';
 import Mutations from '../../graphql/mutation';
+
+import Button from '../../components/Button';
+import { Container, Input, Title } from './components';
 
 
 const AnimatedButton = Animated.createAnimatedComponent(Button);
