@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ActivityIndicator } from 'react-native';
-
 import styled from 'styled-components/native';
-
-import * as actions from '../redux/reducers/user/actions';
+import { Creators as actions } from '../store/ducks/user';
 import colors from '../theme/colors';
 
 
@@ -40,10 +38,11 @@ const mapDispatchToProps = {
   setCredentials: actions.setCredentials
 };
 
-const mapStateToProps = ({ user }) => ({
-  token: user.token,
-  refreshToken: user.refreshToken
-});
+const mapStateToProps = (state) => {
+  const { user } = state;
+
+  return { token: user.token, refreshToken: user.refreshToken };
+};
 
 export default connect(
   mapStateToProps,

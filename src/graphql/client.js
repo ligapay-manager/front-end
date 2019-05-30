@@ -1,9 +1,9 @@
 import ApolloClient from 'apollo-boost';
-import { store } from '../redux/store';
+import { store } from '../store';
 
 
 const apollo = new ApolloClient({
-  uri: 'https://ligapay.herokuapp.com',
+  uri: 'http://ligapay.tk',
   request: async (operation) => {
     const { user } = store.getState();
 

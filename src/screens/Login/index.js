@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { Animated, Easing, StatusBar, ActivityIndicator, Text, ToastAndroid } from 'react-native';
-
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
-
 import Button from '../../components/Button';
 import Container from './Container';
 import Title from './Title';
 import Input from './Input';
-
-import * as actions from '../../redux/reducers/user/actions';
+import { Creators as actions } from '../../store/ducks/user';
 import Mutations from '../../graphql/mutation';
 
 
@@ -64,8 +61,7 @@ class Login extends Component {
   handleLogin = async ({ login: { token, user, info } }) => {
     const { navigation, setCredentials } = this.props;
     const { team, wallet } = user;
-
-    setCredentials({ token, id: user.id, wallet, team });
+    setCredentials(token, wallet, team, user.id);
     ToastAndroid.show(info, ToastAndroid.SHORT);
     navigation.navigate('App');
   };
@@ -84,14 +80,20 @@ class Login extends Component {
         <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>LigaPay</Title>
 
         <Input
-          style={{ opacity: fade, transform: [{ translateX: usernamePosition }] }}
+          style={{
+            opacity: fade,
+            transform: [{ translateX: usernamePosition }]
+          }}
           onChangeText={e => this.setState(prev => ({ ...prev, email: e }))}
           value={email}
           placeholder="Email"
         />
 
         <Input
-          style={{ opacity: fade, transform: [{ translateX: passwordPosition }] }}
+          style={{
+            opacity: fade,
+            transform: [{ translateX: passwordPosition }]
+          }}
           onChangeText={e => this.setState(prev => ({ ...prev, password: e }))}
           value={password}
           placeholder="Senha"
@@ -106,7 +108,10 @@ class Login extends Component {
         >
           {(login, { loading }) => (
             <AnimatedButton
-              style={{ opacity: fade, transform: [{ translateY: buttonPosition }] }}
+              style={{
+                opacity: fade,
+                transform: [{ translateY: buttonPosition }]
+              }}
               onPress={!loading ? login : () => {}}
               color="#14996F"
               title="Entrar"

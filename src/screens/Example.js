@@ -1,11 +1,9 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
-
 import View from '../components/View';
 import Button from '../components/Button';
-
-import * as actions from '../redux/reducers/user/actions';
+import { Creators as actions } from '../store/ducks/user';
 
 
 class Example extends React.Component {
