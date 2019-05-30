@@ -7,8 +7,7 @@ import colors from '../theme/colors';
 import Profile from '../screens/Profile';
 import Wallet from '../screens/Wallet';
 import Ranking from '../screens/Ranking';
-// import Notifications from '../screens/Notifications';
-import Example from '../screens/Example';
+import Notifications from '../screens/Notifications';
 
 
 const appRoutes = {
@@ -37,7 +36,7 @@ const appRoutes = {
     }
   },
   Notifications: {
-    screen: Example,
+    screen: Notifications,
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => (
         <Icon name={`${!focused ? 'bell-outline' : 'bell-ring'}`} size={25} color={tintColor} />
