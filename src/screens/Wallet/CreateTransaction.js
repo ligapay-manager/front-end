@@ -9,7 +9,8 @@ import View from '../../components/View';
 import Button from '../../components/Button';
 
 import mutations from '../../graphql/mutation';
-import queries from '../../graphql/query';
+
+import { WALLET } from '../../graphql/query/user';
 
 
 const Screen = styled(View)`
@@ -68,7 +69,7 @@ class CreateTransaction extends React.Component {
           variables={{ origin, destination, amount: Number(amount) }}
           onCompleted={this.handleSuccess}
           onError={this.handleError}
-          refetchQueries={[{ query: queries.GET_WALLET }]}
+          refetchQueries={[{ query: WALLET }]}
         >
           {(transferir, { loading }) => (
             <Button onPress={!loading ? transferir : () => {}} color="#14996F">

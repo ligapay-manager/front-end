@@ -18,15 +18,9 @@ import 'moment/locale/pt-br';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import {
-  AmountContainer,
-  Container,
-  IconStyle,
-  QRCodeContainer,
-  WalletView,
-  TransactionContainer
-} from './components';
-import query from '../../graphql/query';
+import { AmountContainer, Container, IconStyle, QRCodeContainer, WalletView, TransactionContainer } from './components';
+
+import { WALLET } from '../../graphql/query/user';
 
 
 class Wallet extends React.Component {
@@ -42,6 +36,12 @@ class Wallet extends React.Component {
     ToastAndroid.show('Copied to the clipboard!', ToastAndroid.SHORT);
   };
 
+  onQueryCompleted = ({ me: { wallet } }) => {
+    const { amount, transactions } = wallet;
+
+    this.setState({ amount, transactions });
+  };
+
   render() {
     const { amount, transactions } = this.state;
     const { walletId, navigation } = this.props;
@@ -50,12 +50,7 @@ class Wallet extends React.Component {
       <WalletView>
         <StatusBar animated backgroundColor="#043927" />
 
-        <Query
-          query={query.GET_WALLET}
-          onCompleted={({ me: { wallet } }) => this.setState({ amount: wallet.amount, transactions: wallet.transactions })
-          }
-          fetchPolicy="no-cache"
-        >
+        <Query query={WALLET} onCompleted={this.onQueryCompleted} fetchPolicy="no-cache">
           {({ loading }) => {
             if (loading) {
               return <ActivityIndicator animating color="#c6c013" />;
@@ -76,15 +71,26 @@ class Wallet extends React.Component {
 
                 {transactions && (
                   <FlatList
-                    style={{ backgroundColor: '#fff', borderRadius: 10, marginBottom: 10 }}
-                    contentContainerStyle={{ alignItems: 'center', marginBottom: 20 }}
+                    style={{
+                      backgroundColor: '#fff',
+                      borderRadius: 10,
+                      marginBottom: 10
+                    }}
+                    contentContainerStyle={{
+                      alignItems: 'center',
+                      marginBottom: 20
+                    }}
                     data={transactions}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => (
                       <TouchableNativeFeedback>
                         <TransactionContainer>
                           <Text style={{ color: 'grey' }}>{moment(item.createdAt).fromNow()}</Text>
-                          <Text style={{ color: item.amount >= 0 ? 'black' : 'red' }}>
+                          <Text
+                            style={{
+                              color: item.amount >= 0 ? 'black' : 'red'
+                            }}
+                          >
                             R$
                             {' '}
                             {(item.amount / 100).toFixed(2)}

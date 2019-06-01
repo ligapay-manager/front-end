@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 
-export default gql`
+export const ME = gql`
   query {
     me {
       id
@@ -13,6 +13,36 @@ export default gql`
       }
       wallet {
         id
+      }
+    }
+  }
+`;
+
+export const WALLET = gql`
+  query {
+    me {
+      id
+      wallet {
+        id
+        amount
+        transactions {
+          id
+          amount
+          createdAt
+        }
+      }
+    }
+  }
+`;
+
+export const TEAM_SCORES = gql`
+  query {
+    me {
+      team {
+        scores {
+          score
+          round
+        }
       }
     }
   }
