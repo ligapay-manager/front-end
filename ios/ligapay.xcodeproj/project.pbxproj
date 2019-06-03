@@ -61,6 +61,7 @@
 		D1C18992FB6E47F48BCF0DA1 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BB2044601F4BFB87327C84 /* libRNVectorIcons.a */; };
 		B3321FADD9B541E18EBF4467 /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C2877426FE4DECB67F6852 /* libRNVectorIcons-tvOS.a */; };
 		E6094CBA62674DB385169460 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 706D6876F93249E2A26A1980 /* libBVLinearGradient.a */; };
+		CD53E910073C4A0BB8D3E764 /* Abel-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 985DA850FACF4BBEBBF077EA /* Abel-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -394,6 +395,7 @@
 		E0C2877426FE4DECB67F6852 /* libRNVectorIcons-tvOS.a */ = {isa = PBXFileReference; name = "libRNVectorIcons-tvOS.a"; path = "libRNVectorIcons-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		53EE8A3FF5364F2E974792A5 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; name = "BVLinearGradient.xcodeproj"; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		706D6876F93249E2A26A1980 /* libBVLinearGradient.a */ = {isa = PBXFileReference; name = "libBVLinearGradient.a"; path = "libBVLinearGradient.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		985DA850FACF4BBEBBF077EA /* Abel-Regular.ttf */ = {isa = PBXFileReference; name = "Abel-Regular.ttf"; path = "../assets/fonts/Abel-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -688,6 +690,7 @@
 				78872B0BB624455489594D03 /* Octicons.ttf */,
 				DABC6E5420B54E83ADFF9BA3 /* SimpleLineIcons.ttf */,
 				0820032E62D9401D9BA14055 /* Zocial.ttf */,
+				985DA850FACF4BBEBBF077EA /* Abel-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1155,6 +1158,7 @@
 				4374CC48D2414F59BF2452EC /* Octicons.ttf in Resources */,
 				F2FB71CDAD1044F5BA9AE328 /* SimpleLineIcons.ttf in Resources */,
 				72F5C4D96F3B424E994BF694 /* Zocial.ttf in Resources */,
+				CD53E910073C4A0BB8D3E764 /* Abel-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
