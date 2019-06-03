@@ -75,7 +75,7 @@ class Login extends Component {
     const { email, password } = this.state;
 
     return (
-      <Container>
+      <Container colors={['#14995D', '#168C57', '#043927']}>
         <StatusBar animated backgroundColor="#14995D" />
         <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>LigaPay</Title>
 

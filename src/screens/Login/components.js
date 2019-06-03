@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
+import LinearGradient from 'react-native-linear-gradient';
 import { Animated } from 'react-native';
 
 
-export const Container = styled.View`
+export const Container = styled(LinearGradient)`
   display: flex;
-  background-color: ${props => props.theme.colors.lightGreen};
   justify-content: center;
   align-items: center;
   height: 100%;

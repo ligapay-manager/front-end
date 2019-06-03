@@ -22,6 +22,10 @@ const Centered = styled(View)`
 `;
 
 class Profile extends React.PureComponent {
+  state = {
+    scores: []
+  };
+
   handleLogout = async () => {
     const { navigation, clearCredentials } = this.props;
 
@@ -29,8 +33,13 @@ class Profile extends React.PureComponent {
     navigation.navigate('Login');
   };
 
+  onScoresObtained = ({ me: { team } }) => {
+    this.setState({ scores: team.scores });
+  };
+
   render() {
     const { avatar, cartolaName, name } = this.props;
+    const { scores } = this.state;
 
     return (
       <Centered>
@@ -45,12 +54,11 @@ class Profile extends React.PureComponent {
 
         <Container style={{ justifyContent: 'flex-start' }}>
           <Query query={TEAM_SCORES} onCompleted={this.onScoresObtained} fetchPolicy="no-cache">
-            {({ loading, data }) => {
-              if (loading || !data) {
+            {() => {
+              if (!scores) {
                 return <ActivityIndicator animating color="#ffd300" />;
               }
 
-              const { scores } = data.me.team;
               const score = reduce(scores, (prev, curr) => prev + curr.score, 0).toFixed(2);
 
               return (

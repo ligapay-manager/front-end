@@ -91,9 +91,7 @@ class Wallet extends React.Component {
                               color: item.amount >= 0 ? 'black' : 'red'
                             }}
                           >
-                            R$
-                            {' '}
-                            {(item.amount / 100).toFixed(2)}
+                            {`R$ ${(item.amount / 100).toFixed(2)}`}
                           </Text>
                         </TransactionContainer>
                       </TouchableNativeFeedback>
