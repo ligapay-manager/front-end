@@ -35,7 +35,7 @@ class Wallet extends React.Component {
 
     return (
       <WalletView>
-        <Container colors={['#14995D', '#168C57']}>
+        <Container colors={['#14995D', '#14997e']}>
           <QRCodeContainer onPress={this.onQrCodeClick}>
             <QRCode value={walletId} size={130} bgColor="#14995D" fgColor="#fff" />
           </QRCodeContainer>
@@ -64,11 +64,20 @@ class Wallet extends React.Component {
           </Card>
         </CardsContainer>
 
-        <ActionButton buttonColor="#ffd300" hideShadow size={40} fixNativeFeedbackRadius zIndex={1}>
+        <ActionButton buttonColor="#168C57" hideShadow size={40} fixNativeFeedbackRadius zIndex={1}>
           <ActionButton.Item
             buttonColor="#9b59b6"
             title="Transferir"
             onPress={() => navigation.navigate('CreateTransaction')}
+            fixNativeFeedbackRadius
+          >
+            <IconStyle name="money-bill-wave" />
+          </ActionButton.Item>
+
+          <ActionButton.Item
+            buttonColor="#9b59b6"
+            title="Adicionar fundos"
+            onPress={() => navigation.navigate('AddFunds')}
             fixNativeFeedbackRadius
           >
             <IconStyle name="money-bill-wave" />

@@ -2,6 +2,7 @@ import { createStackNavigator } from 'react-navigation';
 
 import Wallet from './Wallet';
 import CreateTransaction from './CreateTransaction';
+import AddFunds from './AddFunds';
 
 
 export default createStackNavigator({
@@ -21,6 +22,12 @@ export default createStackNavigator({
       headerTitleStyle: {
         color: '#fff'
       }
+    }
+  },
+  AddFunds: {
+    screen: AddFunds,
+    navigationOptions: {
+      header: null
     }
   }
 });
