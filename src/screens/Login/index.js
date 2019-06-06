@@ -60,8 +60,9 @@ class Login extends Component {
 
   handleLogin = async ({ login: { token, user, info } }) => {
     const { navigation, setCredentials } = this.props;
-    const { team, wallet } = user;
-    setCredentials(token, wallet, team, user.id);
+    const { team, wallet, cards } = user;
+
+    setCredentials(token, wallet, team, user.id, cards);
     ToastAndroid.show(info, ToastAndroid.SHORT);
     navigation.navigate('App');
   };
@@ -75,7 +76,7 @@ class Login extends Component {
     const { email, password } = this.state;
 
     return (
-      <Container colors={['#14995D', '#168C57', '#043927']}>
+      <Container colors={['#14995D', '#168C57', '#168C57', '#043539']}>
         <StatusBar animated backgroundColor="#14995D" />
         <Title style={{ opacity: fade, transform: [{ translateY: titlePosition }] }}>LigaPay</Title>
 

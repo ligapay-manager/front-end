@@ -22,6 +22,10 @@ export const WALLET = gql`
   query {
     me {
       id
+      cards {
+        id
+        holderName
+      }
       wallet {
         id
         amount

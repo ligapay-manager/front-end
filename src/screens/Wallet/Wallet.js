@@ -5,8 +5,24 @@ import { Query } from 'react-apollo';
 import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
 import QRCode from 'react-native-qrcode';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import { Container, IconStyle, QRCodeContainer, WalletView, AmountText, CardsContainer, Card } from './components';
+
+import Icon from 'react-native-vector-icons/Entypo';
+import IconPig from 'react-native-vector-icons/FontAwesome5';
+import IconBank from 'react-native-vector-icons/FontAwesome';
+
+import EmptyState from './EmptyState';
+import {
+  Container,
+  IconStyle,
+  QRCodeContainer,
+  WalletView,
+  AmountText,
+  CardsContainer,
+  Menu,
+  ButtonContainer,
+  ButtonMessage,
+  Card
+} from './styled';
 
 import { WALLET } from '../../graphql/query/user';
 
@@ -20,7 +36,7 @@ class Wallet extends React.Component {
     const { walletId } = this.props;
 
     Clipboard.setString(walletId);
-    ToastAndroid.show('Copied to the clipboard!', ToastAndroid.SHORT);
+    ToastAndroid.show('Copiado para a área de transferência!', ToastAndroid.SHORT);
   };
 
   onQueryCompleted = ({ me: { wallet } }) => {
@@ -31,11 +47,40 @@ class Wallet extends React.Component {
 
   render() {
     const { amount } = this.state;
-    const { walletId, navigation } = this.props;
+    const { walletId, navigation, cards } = this.props;
 
     return (
       <WalletView>
-        <Container colors={['#14995D', '#168C57']}>
+        <ActionButton
+          renderIcon={() => <Icon name="dots-three-horizontal" color="#fff" size={12} />}
+          buttonColor="#11824f"
+          hideShadow
+          size={40}
+          fixNativeFeedbackRadius
+          zIndex={1}
+          elevation={4}
+          verticalOrientation="down"
+        >
+          <ActionButton.Item
+            buttonColor="#9b59b6"
+            title="Transferir"
+            onPress={() => navigation.navigate('CreateTransaction')}
+            fixNativeFeedbackRadius
+          >
+            <IconStyle name="money-bill-wave" />
+          </ActionButton.Item>
+
+          <ActionButton.Item
+            buttonColor="#9b59b6"
+            title="Adicionar fundos"
+            onPress={() => navigation.navigate('AddFunds')}
+            fixNativeFeedbackRadius
+          >
+            <IconStyle name="money-bill-wave" />
+          </ActionButton.Item>
+        </ActionButton>
+
+        <Container colors={['#14995D', '#14997e']}>
           <QRCodeContainer onPress={this.onQrCodeClick}>
             <QRCode value={walletId} size={130} bgColor="#14995D" fgColor="#fff" />
           </QRCodeContainer>
@@ -47,40 +92,37 @@ class Wallet extends React.Component {
           </AmountText>
         </Container>
 
+        <Menu>
+          <ButtonContainer>
+            <IconPig name="piggy-bank" size={20} color="#fff" />
+            <ButtonMessage>Adicionar</ButtonMessage>
+          </ButtonContainer>
+          <ButtonContainer>
+            <IconBank name="bank" size={20} color="#fff" />
+            <ButtonMessage>Retirar</ButtonMessage>
+          </ButtonContainer>
+        </Menu>
+
         <CardsContainer>
-          <Card>
-            <Icon name="credit-card" size={20} />
-            <Text style={{ color: 'grey' }}>DATA</Text>
-          </Card>
-
-          <Card>
-            <Icon name="credit-card" size={20} />
-            <Text style={{ color: 'grey' }}>DATA</Text>
-          </Card>
-
-          <Card>
-            <Icon name="credit-card" size={20} />
-            <Text style={{ color: 'grey' }}>DATA</Text>
-          </Card>
+          {cards.length ? (
+            cards.map((c, k) => (
+              <Card key={k}>
+                <Icon name="cc-mastercardc" size={20} />
+                <Text style={{ color: 'grey' }}>{c.lastDigits}</Text>
+              </Card>
+            ))
+          ) : (
+            <EmptyState />
+          )}
         </CardsContainer>
-
-        <ActionButton buttonColor="#ffd300" hideShadow size={40} fixNativeFeedbackRadius zIndex={1}>
-          <ActionButton.Item
-            buttonColor="#9b59b6"
-            title="Transferir"
-            onPress={() => navigation.navigate('CreateTransaction')}
-            fixNativeFeedbackRadius
-          >
-            <IconStyle name="money-bill-wave" />
-          </ActionButton.Item>
-        </ActionButton>
       </WalletView>
     );
   }
 }
 
 const mapStateToProps = ({ user }) => ({
-  walletId: user.wallet.id
+  walletId: user.wallet.id,
+  cards: user.cards
 });
 
 export default connect(mapStateToProps)(Wallet);

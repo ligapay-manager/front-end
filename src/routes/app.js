@@ -55,7 +55,8 @@ const appRoutes = {
 
 export default createMaterialTopTabNavigator(appRoutes, {
   // swipeEnabled: false,
-  initialRouteName: 'Profile',
+  initialRouteName: 'Wallet',
+  // lazy: true,
   tabBarPosition: 'bottom',
   optimizationsEnabled: true,
   animationEnabled: false,
