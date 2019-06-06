@@ -60,8 +60,9 @@ class Login extends Component {
 
   handleLogin = async ({ login: { token, user, info } }) => {
     const { navigation, setCredentials } = this.props;
-    const { team, wallet } = user;
-    setCredentials(token, wallet, team, user.id);
+    const { team, wallet, cards } = user;
+
+    setCredentials(token, wallet, team, user.id, cards);
     ToastAndroid.show(info, ToastAndroid.SHORT);
     navigation.navigate('App');
   };

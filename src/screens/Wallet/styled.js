@@ -16,7 +16,7 @@ export const QRCodeContainer = styled.TouchableOpacity`
 export const WalletView = styled(View)`
   justify-content: flex-start;
   align-items: center;
-  background-color: #fbfbfb;
+  background-color: #e7e7e7;
 `;
 
 export const Container = styled(LinearGradient)`
@@ -43,7 +43,7 @@ export const AmountText = styled.Text`
   margin-top: 30px;
   font-size: 30px;
   color: #fff;
-  font-family: 'Abel-Regular';
+  font-family: "Abel-Regular";
 `;
 
 export const CardsContainer = styled.View`
@@ -80,4 +80,33 @@ export const IconStyle = styled(Icon)`
   font-size: 20px;
   color: #fff;
   height: 22px;
+`;
+
+export const Menu = styled.View`
+  display: flex;
+  flex-direction: row;
+  background-color: #14997e;
+  padding: 10px 0px;
+  justify-content: space-around;
+  width: 100%;
+  padding: 20px 0px;
+  margin: 0px 0px 8px 0px;
+`;
+
+export const ButtonContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  width: 150px;
+`;
+
+export const ButtonMessage = styled.Text`
+  margin-left: 15px;
+  font-size: 16px;
+  font-family: "Abel-Regular";
+  color: #fff;
 `;

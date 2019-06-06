@@ -7,11 +7,13 @@ const apollo = new ApolloClient({
   request: async (operation) => {
     const { user } = store.getState();
 
-    operation.setContext({
-      headers: {
-        Authorization: `Bearer ${user.token}`
-      }
-    });
+    if (user.token) {
+      operation.setContext({
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      });
+    }
   }
 });
 

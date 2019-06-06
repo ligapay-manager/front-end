@@ -17,6 +17,12 @@ export default gql`
         wallet {
           id
         }
+        cards {
+          id
+          holderName
+          lastDigits
+          brand
+        }
       }
     }
   }
