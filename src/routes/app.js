@@ -6,8 +6,9 @@ import colors from '../theme/colors';
 
 import Profile from '../screens/Profile';
 import Wallet from '../screens/Wallet';
-import Ranking from '../screens/Ranking';
 import Notifications from '../screens/Notifications';
+import League from '../screens/Leagues';
+import MyTeam from '../screens/MyTeam';
 
 
 const appRoutes = {
@@ -19,20 +20,18 @@ const appRoutes = {
       )
     }
   },
-  Ranking: {
-    screen: Ranking,
-    navigationOptions: {
-      tabBarIcon: ({ focused, tintColor }) => (
-        <Icon name={`trophy${!focused ? '-outline' : ''}`} size={25} color={tintColor} />
-      )
-    }
-  },
-  Leagues: {
-    screen: Profile,
+  MyTeam: {
+    screen: MyTeam,
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => (
         <Icon name={`shield-account${!focused ? '-outline' : ''}`} size={25} color={tintColor} />
       )
+    }
+  },
+  Leagues: {
+    screen: League,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Icon name="shield-half-full" size={25} color={tintColor} />
     }
   },
   Notifications: {
@@ -55,12 +54,12 @@ const appRoutes = {
 
 export default createMaterialTopTabNavigator(appRoutes, {
   // swipeEnabled: false,
-  initialRouteName: 'Wallet',
+  initialRouteName: 'Leagues',
   // lazy: true,
   tabBarPosition: 'bottom',
   optimizationsEnabled: true,
   animationEnabled: false,
-  order: ['Leagues', 'Wallet', 'Ranking', 'Notifications', 'Profile'],
+  order: ['MyTeam', 'Wallet', 'Leagues', 'Notifications', 'Profile'],
   tabBarOptions: {
     showIcon: true,
     showLabel: false,
