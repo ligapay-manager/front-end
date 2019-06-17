@@ -1,23 +1,11 @@
-import React from 'react';
-import { Text } from 'react-native';
-
-import { connect } from 'react-redux';
-
-import View from '../../components/View';
+import { createStackNavigator } from 'react-navigation';
+import NotificationScreen from './MainScreen';
+import ConfigScreen from './ConfigScreen';
 
 
-const Notifications = (props) => {
-  const { token } = props;
-
-  return (
-    <View>
-      <Text>Notifications</Text>
-    </View>
-  );
-};
-
-const mapStateToProps = ({ user }) => ({
-  token: user.token
+const NotificationStack = createStackNavigator({
+  NotificationScreen,
+  ConfigScreen
 });
 
-export default connect(mapStateToProps)(Notifications);
+export default NotificationStack;
