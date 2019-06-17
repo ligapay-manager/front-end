@@ -79,7 +79,7 @@ export default class MainScreen extends Component {
           fixNativeFeedbackRadius
           zIndex={1}
           elevation={4}
-          onPress={() => navigation.navigate('SearchLeague')}
+          onPress={() => navigation.navigate('SearchScreen')}
         />
       </View>
     );
