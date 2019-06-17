@@ -4,8 +4,8 @@ import ActionButton from 'react-native-action-button';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import View from '../../../components/View';
-import CardLeague from './CardLeague';
-import HeaderCategory from './CategoryLeague';
+import CardLeague from '../ComponentsLeague/CardLeague';
+import HeaderCategory from '../ComponentsLeague/CategoryLeague';
 import { ApiCartola } from '../../../api/ApiCartola';
 
 
@@ -38,7 +38,7 @@ export default class MainScreen extends Component {
 
   leagueClicked(slug) {
     const { navigation } = this.props;
-    navigation.navigate('DetailsMyLeague', { leagueSlug: slug });
+    navigation.navigate('DetailsScreen', { leagueSlug: slug });
   }
 
   render() {
@@ -58,15 +58,21 @@ export default class MainScreen extends Component {
             <HeaderCategory name="Que sou Dono" actionName="Ver todas" />
 
             {leagues.map(league => (league.owner ? (
-            // eslint-disable-next-line max-len
-              <CardLeague league={league} key={league.id} leagueClicked={() => this.leagueClicked(league.slug)} />
+              <CardLeague
+                league={league}
+                key={league.id}
+                leagueClicked={() => navigation.navigate('DetailsScreen', { leagueSlug: league.slug })}
+              />
             ) : null))}
 
             <HeaderCategory name="Que Participo" actionName="Ver todas" />
 
             {leagues.map(league => (league.owner ? null : (
-            // eslint-disable-next-line max-len
-              <CardLeague league={league} key={league.id} leagueClicked={() => this.leagueClicked(league.slug)} />
+              <CardLeague
+                league={league}
+                key={league.id}
+                leagueClicked={() => navigation.navigate('DetailsScreen', { leagueSlug: league.slug })}
+              />
             )))}
           </ScrollView>
         )}

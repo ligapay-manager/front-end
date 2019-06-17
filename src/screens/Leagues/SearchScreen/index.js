@@ -3,7 +3,7 @@ import { ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { connect } from 'react-redux';
-import CardLeague from '../MainScreen/CardLeague';
+import CardLeague from '../ComponentsLeague/CardLeague';
 import View from '../../../components/View';
 import { InputSearch, ContainerIconFilter, Content } from './styled';
 import { ApiCartola } from '../../../api/ApiCartola';
@@ -41,6 +41,7 @@ class SearchScreen extends Component {
     const { navigation } = this.props;
     navigation.setParams({ SearchFilterFunction: this.SearchFilterFunction });
     const ligas = await ApiCartola.getLigas();
+    console.log(ligas);
     this.setState({ dataSource: ligas, arrayholder: ligas, isLoading: false });
   };
 
@@ -62,6 +63,7 @@ class SearchScreen extends Component {
 
   render() {
     const { dataSource, isLoading, refreshing } = this.state;
+    const { navigation } = this.props;
     return (
       <View>
         {isLoading ? (
@@ -74,10 +76,13 @@ class SearchScreen extends Component {
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
           >
             <Content>
-              {dataSource.map(league => (
-                // eslint-disable-next-line max-len
-                <CardLeague league={league} key={league.id} leagueClicked={() => this.leagueClicked()} />
-              ))}
+              {dataSource.map(league => (league.restriction === 'Fechada' ? null : (
+                <CardLeague
+                  league={league}
+                  key={league.id}
+                  leagueClicked={() => navigation.navigate('DetailsScreen', { leagueSlug: league.slug })}
+                />
+              )))}
             </Content>
           </ScrollView>
         )}
