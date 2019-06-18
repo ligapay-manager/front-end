@@ -37,13 +37,8 @@ export default class CardLeague extends Component {
     this.state = {};
   }
 
-  showDetails() {
-    const { leagueClicked } = this.props;
-    leagueClicked();
-  }
-
   render() {
-    const { league } = this.props;
+    const { league, leagueClicked } = this.props;
 
     let leagueType = '';
     let leagueRestriction = '';
@@ -66,7 +61,7 @@ export default class CardLeague extends Component {
       league.cartoleiros = 0;
     }
     return (
-      <Card onPress={() => this.showDetails()}>
+      <Card onPress={() => leagueClicked()}>
         <LeagueImage source={{ uri: league.image }} />
         <LeagueInfoContainer>
           <TitleLeague>{league.name}</TitleLeague>

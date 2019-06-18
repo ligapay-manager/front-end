@@ -78,7 +78,6 @@ const ApiCartola = {
   },
   getDetailsLeague: async (leagueSlug) => {
     try {
-      console.log(leagueSlug);
       const { data } = await axios.get(`auth/liga/${leagueSlug}`, {
         headers: {
           'X-GLB-Token':
