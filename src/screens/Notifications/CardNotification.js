@@ -20,14 +20,15 @@ margin-bottom: 5px;
 export const NotificationContainerTime = styled.View`
   justify-content: flex-end;
   align-items: flex-end;
+  margin-top: 10px;
 `;
 
 export const NotificationTextInfo = styled.Text`
-  font-size: 15px;
+  font-size: 16px;
 `;
 
 export const NotificationTextTime = styled.Text`
-  font-size: 10px;
+  font-size: 11px;
 `;
 
 export default class CardNotificationComponent extends Component {

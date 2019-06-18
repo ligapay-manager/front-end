@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, RefreshControl, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, RefreshControl, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CardNotificationComponent from '../CardNotification';
+import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
 
 
 const notifications = [
@@ -48,7 +49,7 @@ export default class NotificationScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { dataSource: [], isLoading: true, refreshing: false };
+    this.state = { dataSource: ['sda'], isLoading: true, refreshing: false };
   }
 
   componentDidMount() {
@@ -63,11 +64,7 @@ export default class NotificationScreen extends Component {
   render() {
     const { isLoading, dataSource, refreshing } = this.state;
     if (isLoading) {
-      return (
-        <View style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }}>
-          <ActivityIndicator size="large" color="#14995D" />
-        </View>
-      );
+      return <ActivityIndicatorComponent />;
     }
     if (dataSource.length === 0) {
       return (
