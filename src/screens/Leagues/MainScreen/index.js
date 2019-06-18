@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -7,6 +7,7 @@ import View from '../../../components/View';
 import CardLeague from '../ComponentsLeague/CardLeague';
 import HeaderCategory from '../ComponentsLeague/CategoryLeague';
 import { ApiCartola } from '../../../api/ApiCartola';
+import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
 
 
 export default class MainScreen extends Component {
@@ -47,9 +48,7 @@ export default class MainScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         {isLoading ? (
-          <View style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }}>
-            <ActivityIndicator size="large" color="#14995D" />
-          </View>
+          <ActivityIndicatorComponent />
         ) : (
           <ScrollView
             // eslint-disable-next-line max-len

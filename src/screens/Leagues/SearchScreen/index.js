@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { connect } from 'react-redux';
@@ -67,9 +67,7 @@ class SearchScreen extends Component {
     return (
       <View>
         {isLoading ? (
-          <View style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }}>
-            <ActivityIndicator size="large" color="#14995D" />
-          </View>
+          <ActivityIndicatorComponent />
         ) : (
           <ScrollView
             // eslint-disable-next-line max-len
