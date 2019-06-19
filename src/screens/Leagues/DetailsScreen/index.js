@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, View, Picker } from 'react-native';
+import { Animated, View, Picker, RefreshControl, Alert } from 'react-native';
 
 import { ApiCartola } from '../../../api/ApiCartola';
 import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
@@ -21,52 +21,71 @@ export default class DetailsScreen extends Component {
       leagueTeams: [],
       scrollY: new Animated.Value(0),
       isLoading: true,
-      isLoadingQuery: false
+      isLoadingQuery: false,
+      refreshing: false
     };
   }
-
-  updateOption = async (queryOption) => {
-    this.setState({ option: queryOption, isLoadingQuery: true });
-    const { infoLeague } = this.state;
-    const { teams } = await ApiCartola.getDetailsLeague(infoLeague[0].slug, queryOption);
-    this.setState({ leagueTeams: teams, isLoadingQuery: false });
-  };
 
   componentDidMount = async () => {
     const { navigation } = this.props;
     const { option } = this.state;
     const leagueSlug = navigation.getParam('leagueSlug');
-    const { info, teams } = await ApiCartola.getDetailsLeague(leagueSlug, option);
+    const { info, teams } = await this.getTeamDetails(leagueSlug, option);
     this.setState({ infoLeague: info, leagueTeams: teams, isLoading: false });
   };
 
+  getTeamDetails = async (slug, option) => {
+    const { code, data } = await ApiCartola.getDetailsLeague(slug, option);
+    let response = [];
+
+    if (code === 200) {
+      response = data;
+    } else {
+      const { mensagem } = data;
+      Alert.alert(mensagem);
+    }
+    return response;
+  };
+
+  updateOption = async (queryOption) => {
+    this.setState({ option: queryOption, isLoadingQuery: true });
+    const { infoLeague } = this.state;
+    const { teams } = await this.getTeamDetails(infoLeague.slug, queryOption);
+    this.setState({ leagueTeams: teams, isLoadingQuery: false });
+  };
+
+  onRefresh = async () => {
+    this.setState({ refreshing: true });
+    const { infoLeague, option } = this.state;
+    const { info, teams } = await this.getTeamDetails(infoLeague.slug, option);
+    this.setState({ infoLeague: info, leagueTeams: teams, refreshing: false });
+  };
+
   render() {
-    const { scrollY, isLoading, infoLeague, leagueTeams, option, isLoadingQuery } = this.state;
+    const { scrollY, isLoading, infoLeague, leagueTeams, option, isLoadingQuery, refreshing } = this.state;
     const { navigation } = this.props;
 
     return (
       <Container>
         {
-          <StandardHeaderComponent
-            scrollY={scrollY}
-            infoLeague={infoLeague[0]}
-            backScreen={() => navigation.goBack()}
-          />
+          // eslint-disable-next-line max-len
+          <StandardHeaderComponent scrollY={scrollY} infoLeague={infoLeague} backScreen={() => navigation.goBack()} />
         }
-
         {isLoading ? (
           <ActivityIndicatorComponent />
         ) : (
           <Animated.ScrollView
             scrollEventThrottle={16}
             onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }])}
+            // eslint-disable-next-line max-len
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
           >
-            <LeagueHeaderComponent isSubscribe={false} infoLeague={infoLeague[0]} />
+            <LeagueHeaderComponent isSubscribe infoLeague={infoLeague} />
             <CarouselComponent componentContainer={<Awards />} />
             <RankingOptions>
               <RankingName>Ranking por</RankingName>
               <View style={{ flex: 1 }}>
-                <Picker selectedValue={option} onValueChange={this.updateOption}>
+                <Picker style={{ color: '#000' }} selectedValue={option} onValueChange={this.updateOption}>
                   <Picker.Item label="Campeonato" value="campeonato" />
                   <Picker.Item label="Turno" value="turno" />
                   <Picker.Item label="Última Rodada" value="rodada" />
@@ -78,7 +97,7 @@ export default class DetailsScreen extends Component {
             {isLoadingQuery ? (
               <ActivityIndicatorComponent />
             ) : (
-              leagueTeams.map(team => <CardTeamComponent team={team} />)
+              leagueTeams.map(team => <CardTeamComponent key={team.id} team={team} />)
             )}
           </Animated.ScrollView>
         )}

@@ -62,20 +62,19 @@ const ApiCartola = {
   },
   getMinhasLigas: async () => {
     try {
-      const { ligas } = await axios.get('auth/ligas');
-      const parsedLeagues = ParseLeagues(ligas);
-      return MakeResponse(200, parsedLeagues);
+      const { data } = await axios.get('auth/ligas');
+      const { ligas } = data;
+      return MakeResponse(200, ParseLeagues(ligas));
     } catch (error) {
       return MakeResponse(error.response.status, error.response.data);
     }
   },
-  getLigas: async () => {
+  getLigas: async (nameLeague) => {
     try {
-      const { data } = await axios.get('ligas');
-      const parsedLeagues = ParseLeagues(data);
-      return parsedLeagues;
+      const { data } = await axios.get(`ligas?q=${nameLeague}`);
+      return MakeResponse(200, ParseLeagues(data));
     } catch (error) {
-      return error;
+      return MakeResponse(error.response.status, error.response.data);
     }
   },
   getDetailsLeague: async (leagueSlug, option) => {
@@ -85,12 +84,12 @@ const ApiCartola = {
       const { times: Teams } = data;
 
       const league = {
-        info: ParseLeagues([infoLeague]),
+        info: ParseLeagues([infoLeague])[0],
         teams: ParseTeam(Teams)
       };
-      return league;
+      return MakeResponse(200, league);
     } catch (error) {
-      return error;
+      return MakeResponse(error.response.status, error.response.data);
     }
   }
 };

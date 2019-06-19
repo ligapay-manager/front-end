@@ -17,7 +17,7 @@ const CardTitle = styled.Text`
 const CardAwards = styled.View`
   flex: 1;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
   overflow: hidden;
 `;

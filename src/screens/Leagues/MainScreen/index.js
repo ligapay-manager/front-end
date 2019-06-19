@@ -23,33 +23,40 @@ export default class MainScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { dataSource: [], isLoading: true, refreshing: false };
+    this.state = { leaguesOwner: [], leaguesSubscribe: [], isLoading: true, refreshing: false };
   }
 
   componentDidMount = async () => {
-    const leagues = await this.someFuntion();
-    this.setState({ dataSource: leagues, isLoading: false });
+    const { leaguesOwner, leaguesSubscribe } = await this.getLigas();
+    this.setState({ leaguesOwner, leaguesSubscribe, isLoading: false });
   };
 
-  someFuntion = async () => {
+  getLigas = async () => {
     const { code, data } = await ApiCartola.getMinhasLigas();
-    let response = [];
+    const response = {
+      leaguesOwner: [],
+      leaguesSubscribe: []
+    };
 
     if (code === 200) {
-      const { leagues } = data;
-      response = leagues;
+      for (let index = 0; index < data.length; index += 1) {
+        if (data[index].owner) {
+          response.leaguesOwner.push(data[index]);
+        } else {
+          response.leaguesSubscribe.push(data[index]);
+        }
+      }
     } else {
       const { mensagem } = data;
       Alert.alert(mensagem);
     }
-
     return response;
   };
 
   onRefresh = async () => {
     this.setState({ refreshing: true });
-    const leagues = await this.someFuntion();
-    this.setState({ dataSource: leagues, isLoading: false, refreshing: false });
+    const { leaguesOwner, leaguesSubscribe } = await this.getLigas();
+    this.setState({ leaguesOwner, leaguesSubscribe, refreshing: false });
   };
 
   leagueClicked(slug) {
@@ -59,7 +66,8 @@ export default class MainScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { dataSource: leagues, isLoading, refreshing } = this.state;
+    const { leaguesOwner, leaguesSubscribe, isLoading, refreshing } = this.state;
+
     return (
       <View style={{ flex: 1 }}>
         {isLoading ? (
@@ -69,25 +77,25 @@ export default class MainScreen extends Component {
             // eslint-disable-next-line max-len
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
           >
-            <HeaderCategory name="Que sou Dono" actionName="Ver todas" />
+            <HeaderCategory name="Que sou Presidente" actionName="Ver todas" />
 
-            {leagues.map(league => (league.owner ? (
+            {leaguesOwner.map(league => (
               <CardLeague
                 league={league}
                 key={league.id}
                 leagueClicked={() => navigation.navigate('DetailsScreen', { leagueSlug: league.slug })}
               />
-            ) : null))}
+            ))}
 
             <HeaderCategory name="Que Participo" actionName="Ver todas" />
 
-            {leagues.map(league => (league.owner ? null : (
+            {leaguesSubscribe.map(league => (
               <CardLeague
                 league={league}
                 key={league.id}
                 leagueClicked={() => navigation.navigate('DetailsScreen', { leagueSlug: league.slug })}
               />
-            )))}
+            ))}
           </ScrollView>
         )}
 

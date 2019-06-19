@@ -80,7 +80,7 @@ export default class LeagueHeaderComponent extends Component {
         <LeagueHeaderInfo>{`${leagueType} | ${leagueRestriction}`}</LeagueHeaderInfo>
         <LeagueHeaderInfo>{`${infoLeague.cartoleiros} Cartoleiros`}</LeagueHeaderInfo>
         <ButtonContainer>
-          <ButtonMessage>{isSubscribe ? 'Participar' : 'Parcipando'}</ButtonMessage>
+          <ButtonMessage>{isSubscribe ? 'Parcipando' : 'Parcipar'}</ButtonMessage>
         </ButtonContainer>
       </LeagueHeaderBackground>
     );
