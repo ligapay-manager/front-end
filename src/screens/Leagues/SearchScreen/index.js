@@ -3,7 +3,8 @@ import { ScrollView, RefreshControl } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { connect } from 'react-redux';
-import CardLeague from '../ComponentsLeague/CardLeague';
+import CardLeague from '../../../components/CardLeague';
+import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
 import View from '../../../components/View';
 import { InputSearch, ContainerIconFilter, Content } from './styled';
 import { ApiCartola } from '../../../api/ApiCartola';
@@ -41,7 +42,6 @@ class SearchScreen extends Component {
     const { navigation } = this.props;
     navigation.setParams({ SearchFilterFunction: this.SearchFilterFunction });
     const ligas = await ApiCartola.getLigas();
-    console.log(ligas);
     this.setState({ dataSource: ligas, arrayholder: ligas, isLoading: false });
   };
 

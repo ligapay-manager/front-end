@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, RefreshControl } from 'react-native';
+import { ScrollView, RefreshControl, Alert } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import View from '../../../components/View';
-import CardLeague from '../ComponentsLeague/CardLeague';
-import HeaderCategory from '../ComponentsLeague/CategoryLeague';
+import CardLeague from '../../../components/CardLeague';
+import HeaderCategory from './CategoryLeague';
 import { ApiCartola } from '../../../api/ApiCartola';
 import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
 
@@ -27,13 +27,28 @@ export default class MainScreen extends Component {
   }
 
   componentDidMount = async () => {
-    const leagues = await ApiCartola.getMinhasLigas();
+    const leagues = await this.someFuntion();
     this.setState({ dataSource: leagues, isLoading: false });
+  };
+
+  someFuntion = async () => {
+    const { code, data } = await ApiCartola.getMinhasLigas();
+    let response = [];
+
+    if (code === 200) {
+      const { leagues } = data;
+      response = leagues;
+    } else {
+      const { mensagem } = data;
+      Alert.alert(mensagem);
+    }
+
+    return response;
   };
 
   onRefresh = async () => {
     this.setState({ refreshing: true });
-    const leagues = await ApiCartola.getMinhasLigas();
+    const leagues = await this.someFuntion();
     this.setState({ dataSource: leagues, isLoading: false, refreshing: false });
   };
 

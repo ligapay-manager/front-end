@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { Animated } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styled from 'styled-components';
-import Utils from './utils';
+import Utils from '../../../theme/utils';
 
+import { HEADER_HEIGHT } from './styled';
 
-export const HEADER_MAX_HEIGHT = 420;
-export const HEADER_MIN_HEIGHT = Utils.APPBAR_HEIGHT;
-export const HEADER_HEIGHT = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 export const Header = Animated.createAnimatedComponent(styled.View`
   height: ${Utils.APPBAR_HEIGHT};
@@ -30,7 +28,7 @@ export const HeaderRightIcon = styled.TouchableOpacity`
 export const HeaderTitle = Animated.createAnimatedComponent(styled.Text`
   text-align: center;
   justify-content: center;
-  color: #000000;
+  color: #fff;
   font-size: ${Utils.fontNormal};
 `);
 
@@ -61,9 +59,11 @@ export default class StandardHeader extends Component {
         <HeaderLeftIcon onPress={() => backScreen()}>
           <Icons name="arrow-left" size={25} color="#FFFFFF" />
         </HeaderLeftIcon>
-        <HeaderTitle style={{ color: '#fff', opacity: headerTitleOpacity }}>
-          {infoLeague ? infoLeague.name : null}
-        </HeaderTitle>
+
+        {
+          // eslint-disable-next-line max-len
+          <HeaderTitle style={{ opacity: headerTitleOpacity }}>{infoLeague ? infoLeague.name : null}</HeaderTitle>
+        }
         <HeaderRightIcon />
       </Header>
     );

@@ -11,7 +11,7 @@ export const TeamContainer = styled.View`
 const Team = styled.View`
   flex: 1;
   background-color: #ffffff;
-  margin: 5px 5px 5px 5px;
+  margin: 5px 15px 5px 15px;
   elevation: 3px;
   border-radius: 5px;
   align-self: stretch;
@@ -28,14 +28,13 @@ const TeamRanking = styled.View`
   width: 40px;
   height: 100%;
   flex-direction: row;
-  margin-right: 5px;
 `;
 
 export const TeamBodyContainer = styled.View`
   flex: 1;
   flex-direction: row;
-  justify-content: space-between;
   align-content: stretch;
+  justify-content: space-between;
   align-items: center;
   margin-right: 15px;
 `;
@@ -71,7 +70,7 @@ export const ProfileImage = styled.Image`
   left: 35px;
 `;
 
-export default class CardTeam extends Component {
+export default class CardTeamComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -98,13 +97,15 @@ export default class CardTeam extends Component {
               </View>
             </TeamInfoContainer>
 
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontWeight: 'bold' }}>Parciais</Text>
-              <Text>{parseFloat(team.points.parcial).toFixed(2)}</Text>
-            </View>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontWeight: 'bold' }}>Total</Text>
-              <Text>{parseFloat(team.points.total).toFixed(2)}</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ alignItems: 'center' }}>
+                <Text style={{ fontWeight: 'bold' }}>Parciais</Text>
+                <Text>{parseFloat(team.points.parcial).toFixed(2)}</Text>
+              </View>
+              <View style={{ alignItems: 'center', marginLeft: 20 }}>
+                <Text style={{ fontWeight: 'bold' }}>Total</Text>
+                <Text>{parseFloat(team.points.total).toFixed(2)}</Text>
+              </View>
             </View>
           </TeamBodyContainer>
         </Team>

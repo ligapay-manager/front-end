@@ -1,7 +1,16 @@
 const Axios = require('axios');
 
 
-const axios = Axios.create({ baseURL: 'https://api.cartolafc.globo.com/' });
+const axios = Axios.create({
+  baseURL: 'https://api.cartolafc.globo.com/',
+  headers: {
+    'X-GLB-Token':
+      // eslint-disable-next-line max-len
+      '197a33558a216b78fbbfcff4c107b407434693135643173566e397078576a53364b2d415048484c534653714f66645f457967594f6b684c3236366d6e2d7a764450656330646166566370586a5a2d5a4b4b7a4750726c6a445136374e4b662d624a535f4573413d3d3a303a756c6b68637971677268726f706c6f626d6a776f'
+  }
+});
+
+const MakeResponse = (responseCode, responseData) => ({ code: responseCode, data: responseData });
 
 const ParseLeagues = (ligas) => {
   const parse = response => ({
@@ -53,18 +62,11 @@ const ApiCartola = {
   },
   getMinhasLigas: async () => {
     try {
-      const { data } = await axios.get('auth/ligas', {
-        headers: {
-          'X-GLB-Token':
-            // eslint-disable-next-line max-len
-            '197a33558a216b78fbbfcff4c107b407434693135643173566e397078576a53364b2d415048484c534653714f66645f457967594f6b684c3236366d6e2d7a764450656330646166566370586a5a2d5a4b4b7a4750726c6a445136374e4b662d624a535f4573413d3d3a303a756c6b68637971677268726f706c6f626d6a776f'
-        }
-      });
-      const { ligas } = data;
+      const { ligas } = await axios.get('auth/ligas');
       const parsedLeagues = ParseLeagues(ligas);
-      return parsedLeagues;
+      return MakeResponse(200, parsedLeagues);
     } catch (error) {
-      return error;
+      return MakeResponse(error.response.status, error.response.data);
     }
   },
   getLigas: async () => {
@@ -76,15 +78,9 @@ const ApiCartola = {
       return error;
     }
   },
-  getDetailsLeague: async (leagueSlug) => {
+  getDetailsLeague: async (leagueSlug, option) => {
     try {
-      const { data } = await axios.get(`auth/liga/${leagueSlug}`, {
-        headers: {
-          'X-GLB-Token':
-            // eslint-disable-next-line max-len
-            '197a33558a216b78fbbfcff4c107b407434693135643173566e397078576a53364b2d415048484c534653714f66645f457967594f6b684c3236366d6e2d7a764450656330646166566370586a5a2d5a4b4b7a4750726c6a445136374e4b662d624a535f4573413d3d3a303a756c6b68637971677268726f706c6f626d6a776f'
-        }
-      });
+      const { data } = await axios.get(`auth/liga/${leagueSlug}/?orderBy=${option}`);
       const { liga: infoLeague } = data;
       const { times: Teams } = data;
 

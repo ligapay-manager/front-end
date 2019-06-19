@@ -1,85 +1,88 @@
 import React, { Component } from 'react';
-import { Animated, View, ActivityIndicator } from 'react-native';
+import { Animated, View, Picker } from 'react-native';
 
-import StandardHeader from '../ComponentsLeague/StandardHeader';
-import LeagueHeader from '../ComponentsLeague/LeagueHeader';
-import Carousel from '../ComponentsLeague/Carousel';
-import CardTeam from '../ComponentsLeague/CardTeam';
 import { ApiCartola } from '../../../api/ApiCartola';
+import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
+import CarouselComponent from '../../../components/Carousel';
+import CardTeamComponent from '../../../components/CardTeam';
 
+import StandardHeaderComponent from './StandardHeader';
+import LeagueHeaderComponent from './LeagueHeader';
+import Awards from './ Awards';
+import { RankingOptions, RankingName, Container } from './styled';
 
-export const HEADER_MAX_HEIGHT = 420;
-export const HEADER_MIN_HEIGHT = 56;
-export const HEADER_HEIGHT = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 export default class DetailsScreen extends Component {
-  // static navigationOptions = ({ navigation }) => ({
-  //   title: 'teste',
-  //   headerTintColor: '#fff',
-  //   headerTitleStyle: {
-  //     opacity: !navigation.params ? 0 : navigation.getParam('headerTitleOpacity')
-  //   },
-  //   headerStyle: {
-  //     elevation: 0,
-  //     backgroundColor: !navigation.params ? '#14995D' : navigation.getParam('headerBackgroundColor')
-  //   }
-  // });
-
   constructor(props) {
     super(props);
-    this.state = { infoLeague: [], leagueTeams: [], scrollY: new Animated.Value(0), isLoading: true };
+    this.state = {
+      option: 'campeonato',
+      infoLeague: [],
+      leagueTeams: [],
+      scrollY: new Animated.Value(0),
+      isLoading: true,
+      isLoadingQuery: false
+    };
   }
 
-  // componentWillMount() {
-  //   const { navigation } = this.props;
-  //   const { scrollY } = this.state;
-  //   navigation.setParams({
-  //     headerBackgroundColor: scrollY.interpolate({
-  //       inputRange: [0, HEADER_HEIGHT],
-  //       outputRange: ['#14995D', '#14997e'],
-  //       extrapolate: 'clamp',
-  //       useNativeDriver: true
-  //     }),
-  //     headerTitleOpacity: scrollY.interpolate({
-  //       inputRange: [0, HEADER_HEIGHT / 2, HEADER_HEIGHT],
-  //       outputRange: [0, 0.5, 1],
-  //       extrapolate: 'clamp',
-  //       useNativeDriver: true
-  //     })
-  //   });
-  // }
+  updateOption = async (queryOption) => {
+    this.setState({ option: queryOption, isLoadingQuery: true });
+    const { infoLeague } = this.state;
+    const { teams } = await ApiCartola.getDetailsLeague(infoLeague[0].slug, queryOption);
+    this.setState({ leagueTeams: teams, isLoadingQuery: false });
+  };
 
   componentDidMount = async () => {
     const { navigation } = this.props;
+    const { option } = this.state;
     const leagueSlug = navigation.getParam('leagueSlug');
-    const { info, teams } = await ApiCartola.getDetailsLeague(leagueSlug);
+    const { info, teams } = await ApiCartola.getDetailsLeague(leagueSlug, option);
     this.setState({ infoLeague: info, leagueTeams: teams, isLoading: false });
   };
 
   render() {
-    const { scrollY, isLoading, infoLeague, leagueTeams } = this.state;
+    const { scrollY, isLoading, infoLeague, leagueTeams, option, isLoadingQuery } = this.state;
     const { navigation } = this.props;
+
     return (
-      <View style={{ flex: 1 }}>
-        <StandardHeader scrollY={scrollY} infoLeague={infoLeague[0]} backScreen={() => navigation.goBack()} />
+      <Container>
+        {
+          <StandardHeaderComponent
+            scrollY={scrollY}
+            infoLeague={infoLeague[0]}
+            backScreen={() => navigation.goBack()}
+          />
+        }
 
         {isLoading ? (
-          <View style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }}>
-            <ActivityIndicator size="large" color="#14995D" />
-          </View>
+          <ActivityIndicatorComponent />
         ) : (
           <Animated.ScrollView
             scrollEventThrottle={16}
             onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }])}
           >
-            <LeagueHeader infoLeague={infoLeague[0]} />
-            <Carousel />
-            {leagueTeams.map(team => (
-              <CardTeam team={team} />
-            ))}
+            <LeagueHeaderComponent isSubscribe={false} infoLeague={infoLeague[0]} />
+            <CarouselComponent componentContainer={<Awards />} />
+            <RankingOptions>
+              <RankingName>Ranking por</RankingName>
+              <View style={{ flex: 1 }}>
+                <Picker selectedValue={option} onValueChange={this.updateOption}>
+                  <Picker.Item label="Campeonato" value="campeonato" />
+                  <Picker.Item label="Turno" value="turno" />
+                  <Picker.Item label="Última Rodada" value="rodada" />
+                  <Picker.Item label="Mês" value="mes" />
+                  <Picker.Item label="Patrimônio" value="patrimonio" />
+                </Picker>
+              </View>
+            </RankingOptions>
+            {isLoadingQuery ? (
+              <ActivityIndicatorComponent />
+            ) : (
+              leagueTeams.map(team => <CardTeamComponent team={team} />)
+            )}
           </Animated.ScrollView>
         )}
-      </View>
+      </Container>
     );
   }
 }
