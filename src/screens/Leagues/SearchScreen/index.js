@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { ScrollView, RefreshControl, Alert, Text } from 'react-native';
+import { ScrollView, RefreshControl, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-
 import { connect } from 'react-redux';
+import { showMessage } from 'react-native-flash-message';
 import CardLeague from '../../../components/CardLeague';
 import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
 import View from '../../../components/View';
 import { InputSearch, ContainerIconFilter, Content } from './styled';
-import { ApiCartola } from '../../../api/ApiCartola';
+import ApiCartola from '../../../api/ApiCartola';
 
 
 class SearchScreen extends Component {
@@ -19,18 +19,13 @@ class SearchScreen extends Component {
         placeholder="Clique aqui para pesquisar..."
         autoCompleteType="off"
         placeholderTextColor="#ffffff"
-        selectionColor="#000000"
       />
     ),
     headerRight: (
       <ContainerIconFilter>
         <Icon name="md-options" size={25} color="#ffffff" />
       </ContainerIconFilter>
-    ),
-    headerStyle: {
-      backgroundColor: '#14995D'
-    },
-    headerTintColor: '#ffffff'
+    )
   });
 
   constructor(props) {
@@ -50,8 +45,12 @@ class SearchScreen extends Component {
     if (code === 200) {
       response = data;
     } else {
-      const { mensagem } = data;
-      Alert.alert(mensagem);
+      showMessage({
+        message: 'Cartola em Manutenção',
+        description: 'Não conseguimos procurar a liga!',
+        type: 'warning',
+        icon: 'warning'
+      });
     }
 
     return response;
@@ -97,7 +96,6 @@ class SearchScreen extends Component {
     return (
       <View>
         <ScrollView
-          // eslint-disable-next-line max-len
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
         >
           <Content>

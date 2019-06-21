@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components';
 import Utils from '../../../theme/utils';
-
 import { HEADER_HEIGHT } from './styled';
 
 

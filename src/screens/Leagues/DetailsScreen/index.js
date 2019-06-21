@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Animated, View, Picker, RefreshControl, Alert } from 'react-native';
-
-import { ApiCartola } from '../../../api/ApiCartola';
+import ApiCartola from '../../../api/ApiCartola';
 import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
 import CarouselComponent from '../../../components/Carousel';
 import CardTeamComponent from '../../../components/CardTeam';
-
 import StandardHeaderComponent from './StandardHeader';
 import LeagueHeaderComponent from './LeagueHeader';
 import Awards from './ Awards';
@@ -67,17 +65,14 @@ export default class DetailsScreen extends Component {
 
     return (
       <Container>
-        {
-          // eslint-disable-next-line max-len
-          <StandardHeaderComponent scrollY={scrollY} infoLeague={infoLeague} backScreen={() => navigation.goBack()} />
-        }
+        <StandardHeaderComponent scrollY={scrollY} infoLeague={infoLeague} backScreen={() => navigation.goBack()} />
+
         {isLoading ? (
           <ActivityIndicatorComponent />
         ) : (
           <Animated.ScrollView
             scrollEventThrottle={16}
             onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }])}
-            // eslint-disable-next-line max-len
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
           >
             <LeagueHeaderComponent isSubscribe infoLeague={infoLeague} />

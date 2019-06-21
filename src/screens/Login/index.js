@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { Animated, Easing, StatusBar, ActivityIndicator, Text, ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
-
 import { Creators as actions } from '../../store/ducks/user';
 import Mutations from '../../graphql/mutation';
-
 import Button from '../../components/Button';
 import { Container, Input, Title } from './components';
+import ApiCartola from '../../api/ApiCartola';
 
 
 const AnimatedButton = Animated.createAnimatedComponent(Button);
@@ -62,7 +61,11 @@ class Login extends Component {
     const { navigation, setCredentials } = this.props;
     const { team, wallet, cards } = user;
 
-    setCredentials(token, wallet, team, user.id, cards);
+    // GAMBIARRA ENQUANTO SAVIO NAO ACERTA AS COISAS
+    const { email, password } = this.state;
+    const { tokenGlobo } = await ApiCartola.login(email, password);
+    // ---------------------------------------------
+    setCredentials(token, tokenGlobo, wallet, team, user.id, cards);
     ToastAndroid.show(info, ToastAndroid.SHORT);
     navigation.navigate('App');
   };

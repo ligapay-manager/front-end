@@ -10,7 +10,7 @@ module.exports = {
     'comma-dangle': 'off',
     'import/newline-after-import': ['error', { count: 2 }],
     'object-curly-newline': 'off',
-    'max-len': ['error', { code: 110 }],
+    'max-len': ['error', { code: 130 }],
     'object-property-newline': 'off'
   },
   globals: {

@@ -32,11 +32,11 @@ const CategoryActionName = styled.Text`
 `;
 
 const HeaderCategoryLeague = (props) => {
-  const { name, actionName } = props;
+  const { name, actionName, actionIcon } = props;
   return (
     <Category>
       <CategoryName>{name}</CategoryName>
-      <CategoryAction>
+      <CategoryAction onPress={() => actionIcon()}>
         <CategoryActionName>{actionName}</CategoryActionName>
         <IconSimple name="arrow-right" size={15} />
       </CategoryAction>

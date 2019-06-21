@@ -1,44 +1,48 @@
 import React, { Component } from 'react';
-import { ScrollView, RefreshControl, Alert } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import View from '../../../components/View';
+import { connect } from 'react-redux';
+import { showMessage } from 'react-native-flash-message';
+import { Creators as actions } from '../../../store/ducks/user';
 import CardLeague from '../../../components/CardLeague';
 import HeaderCategory from './CategoryLeague';
-import { ApiCartola } from '../../../api/ApiCartola';
+import ApiCartola from '../../../api/ApiCartola';
 import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
+import { Container, TextContainer, TextMessage } from './styled';
 
 
-export default class MainScreen extends Component {
-  static navigationOptions = () => ({
-    headerTitle: 'Ligas',
-    headerStyle: {
-      backgroundColor: '#14995D'
-    },
-    headerTitleStyle: {
-      color: '#ffffff'
-    }
-  });
-
+class MainScreen extends Component {
   constructor(props) {
     super(props);
     this.state = { leaguesOwner: [], leaguesSubscribe: [], isLoading: true, refreshing: false };
   }
 
-  componentDidMount = async () => {
-    const { leaguesOwner, leaguesSubscribe } = await this.getLigas();
-    this.setState({ leaguesOwner, leaguesSubscribe, isLoading: false });
-  };
+  async componentDidMount() {
+    const { leagues } = this.props;
 
-  getLigas = async () => {
+    if (leagues) {
+      this.setState({
+        leaguesOwner: leagues.leaguesOwner,
+        leaguesSubscribe: leagues.leaguesSubscribe,
+        isLoading: false
+      });
+    } else {
+      const { leaguesOwner, leaguesSubscribe } = await this.getLigas();
+      this.setState({ leaguesOwner, leaguesSubscribe, isLoading: false });
+    }
+  }
+
+  async getLigas() {
     const { code, data } = await ApiCartola.getMinhasLigas();
-    const response = {
-      leaguesOwner: [],
-      leaguesSubscribe: []
-    };
+    const { setLeagues, leagues } = this.props;
 
     if (code === 200) {
+      const response = {
+        leaguesOwner: [],
+        leaguesSubscribe: []
+      };
+
       for (let index = 0; index < data.length; index += 1) {
         if (data[index].owner) {
           response.leaguesOwner.push(data[index]);
@@ -46,17 +50,57 @@ export default class MainScreen extends Component {
           response.leaguesSubscribe.push(data[index]);
         }
       }
-    } else {
-      const { mensagem } = data;
-      Alert.alert(mensagem);
+
+      setLeagues(response);
+      return response;
     }
-    return response;
-  };
+
+    showMessage({
+      message: 'Cartola em Manutenção',
+      description: 'Suas ligas do cartola não puderam ser atualizadas!',
+      type: 'warning',
+      icon: 'warning'
+    });
+    return leagues;
+  }
 
   onRefresh = async () => {
     this.setState({ refreshing: true });
     const { leaguesOwner, leaguesSubscribe } = await this.getLigas();
     this.setState({ leaguesOwner, leaguesSubscribe, refreshing: false });
+  };
+
+  renderLeagues = (leagues, owner) => {
+    const { navigation } = this.props;
+    if (leagues.length === 0) {
+      return (
+        <TextContainer>
+          {owner ? (
+            <TextMessage>Você não é presidente de nenhuma liga.</TextMessage>
+          ) : (
+            <TextMessage>Você não participa de nenhuma liga.</TextMessage>
+          )}
+        </TextContainer>
+      );
+    }
+    return leagues.map(league => (
+      <CardLeague
+        league={league}
+        key={league.id}
+        leagueClicked={() => navigation.navigate('DetailsScreen', { leagueSlug: league.slug })}
+      />
+    ));
+  };
+
+  renderCategory = (category, owner) => {
+    const { navigation } = this.props;
+    return (
+      <HeaderCategory
+        name={category.name}
+        actionName={category.nameAction}
+        actionIcon={() => navigation.navigate('AllSeeScreen', { titleHeader: category.name, isLeagueOwner: owner })}
+      />
+    );
   };
 
   leagueClicked(slug) {
@@ -65,39 +109,26 @@ export default class MainScreen extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
     const { leaguesOwner, leaguesSubscribe, isLoading, refreshing } = this.state;
+    const { navigation } = this.props;
+    if (isLoading) {
+      return (
+        <Container>
+          <ActivityIndicatorComponent />
+        </Container>
+      );
+    }
 
     return (
-      <View style={{ flex: 1 }}>
-        {isLoading ? (
-          <ActivityIndicatorComponent />
-        ) : (
-          <ScrollView
-            // eslint-disable-next-line max-len
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
-          >
-            <HeaderCategory name="Que sou Presidente" actionName="Ver todas" />
-
-            {leaguesOwner.map(league => (
-              <CardLeague
-                league={league}
-                key={league.id}
-                leagueClicked={() => navigation.navigate('DetailsScreen', { leagueSlug: league.slug })}
-              />
-            ))}
-
-            <HeaderCategory name="Que Participo" actionName="Ver todas" />
-
-            {leaguesSubscribe.map(league => (
-              <CardLeague
-                league={league}
-                key={league.id}
-                leagueClicked={() => navigation.navigate('DetailsScreen', { leagueSlug: league.slug })}
-              />
-            ))}
-          </ScrollView>
-        )}
+      <Container>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
+        >
+          {this.renderCategory({ name: 'Que sou Presidente', nameAction: 'Ver todas' }, true)}
+          {this.renderLeagues(leaguesOwner, true)}
+          {this.renderCategory({ name: 'Que Participo', nameAction: 'Ver todas' }, false)}
+          {this.renderLeagues(leaguesSubscribe, false)}
+        </ScrollView>
 
         <ActionButton
           renderIcon={() => <IconMaterial name="shield-search" color="#fff" size={25} />}
@@ -109,7 +140,22 @@ export default class MainScreen extends Component {
           elevation={4}
           onPress={() => navigation.navigate('SearchScreen')}
         />
-      </View>
+      </Container>
     );
   }
 }
+
+const mapDispatchToProps = {
+  setLeagues: actions.setLeagues
+};
+
+const mapStateToProps = (state) => {
+  const { user } = state;
+
+  return { leagues: user.leagues };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainScreen);

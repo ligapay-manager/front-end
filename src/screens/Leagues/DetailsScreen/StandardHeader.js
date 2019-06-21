@@ -3,7 +3,6 @@ import { Animated } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styled from 'styled-components';
 import Utils from '../../../theme/utils';
-
 import { HEADER_HEIGHT } from './styled';
 
 
@@ -59,11 +58,7 @@ export default class StandardHeader extends Component {
         <HeaderLeftIcon onPress={() => backScreen()}>
           <Icons name="arrow-left" size={25} color="#FFFFFF" />
         </HeaderLeftIcon>
-
-        {
-          // eslint-disable-next-line max-len
-          <HeaderTitle style={{ opacity: headerTitleOpacity }}>{infoLeague ? infoLeague.name : null}</HeaderTitle>
-        }
+        {<HeaderTitle style={{ opacity: headerTitleOpacity }}>{infoLeague ? infoLeague.name : null}</HeaderTitle>}
         <HeaderRightIcon />
       </Header>
     );
