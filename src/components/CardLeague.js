@@ -31,7 +31,7 @@ export const LeagueImage = styled.Image`
   height: 70px;
 `;
 
-export default class CardLeague extends Component {
+export default class CardLeagueComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {};

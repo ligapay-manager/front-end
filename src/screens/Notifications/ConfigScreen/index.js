@@ -32,17 +32,6 @@ const Options = [
 ];
 
 export default class ConfigScreen extends Component {
-  static navigationOptions = () => ({
-    headerTitle: 'Configurações',
-    headerStyle: {
-      backgroundColor: '#14995D'
-    },
-    headerTitleStyle: {
-      color: '#ffffff'
-    },
-    headerTintColor: '#fff'
-  });
-
   constructor(props) {
     super(props);
     this.state = { checkBoxChecked: [], isLoading: true, refreshing: false };
@@ -74,7 +63,6 @@ export default class ConfigScreen extends Component {
     }
     return (
       <ScrollView
-        // eslint-disable-next-line max-len
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
       >
         <Container>

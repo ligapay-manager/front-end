@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components';
-import Utils from './utils';
+import Utils from '../../../theme/utils';
+import { HEADER_HEIGHT } from './styled';
 
-
-export const HEADER_MAX_HEIGHT = 420;
-export const HEADER_MIN_HEIGHT = Utils.APPBAR_HEIGHT;
-export const HEADER_HEIGHT = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 export const LeagueHeaderBackground = styled(LinearGradient)`
   height: ${HEADER_HEIGHT};
@@ -46,14 +43,14 @@ export const ButtonMessage = styled(TextStandard)`
   font-size: 12px;
 `;
 
-export default class LeagueHeader extends Component {
+export default class LeagueHeaderComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const { infoLeague } = this.props;
+    const { infoLeague, isSubscribe } = this.props;
 
     let leagueType = '';
     let leagueRestriction = '';
@@ -82,7 +79,7 @@ export default class LeagueHeader extends Component {
         <LeagueHeaderInfo>{`${leagueType} | ${leagueRestriction}`}</LeagueHeaderInfo>
         <LeagueHeaderInfo>{`${infoLeague.cartoleiros} Cartoleiros`}</LeagueHeaderInfo>
         <ButtonContainer>
-          <ButtonMessage>Participar</ButtonMessage>
+          <ButtonMessage>{isSubscribe ? 'Parcipando' : 'Parcipar'}</ButtonMessage>
         </ButtonContainer>
       </LeagueHeaderBackground>
     );

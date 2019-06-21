@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, RefreshControl, ScrollView } from 'react-native';
+import { Text, RefreshControl, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import CardNotificationComponent from '../CardNotification';
+import CardNotificationComponent from './CardNotification';
 import ActivityIndicatorComponent from '../../../components/ActivityIndicator';
 
 
@@ -34,19 +34,6 @@ const notifications = [
 ];
 
 export default class NotificationScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Notificações',
-    headerStyle: {
-      backgroundColor: '#14995D'
-    },
-    headerTintColor: '#fff',
-    headerRight: (
-      <TouchableOpacity onPress={() => navigation.navigate('ConfigScreen')}>
-        <Icon style={{ marginRight: 15 }} name="settings" color="#fff" size={25} />
-      </TouchableOpacity>
-    )
-  });
-
   constructor(props) {
     super(props);
     this.state = { dataSource: ['sda'], isLoading: true, refreshing: false };
@@ -71,7 +58,6 @@ export default class NotificationScreen extends Component {
         <ScrollView
           contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
           refreshing={refreshing}
-          // eslint-disable-next-line max-len
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
         >
           <Icon name="bell-off-outline" size={100} />
@@ -84,7 +70,6 @@ export default class NotificationScreen extends Component {
     return (
       <ScrollView
         refreshing={refreshing}
-        // eslint-disable-next-line max-len
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} colors={['#14995D']} />}
       >
         {notifications.map(notification => (
