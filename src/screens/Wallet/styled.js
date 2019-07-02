@@ -19,6 +19,18 @@ export const WalletView = styled(View)`
   background-color: #e7e7e7;
 `;
 
+export const AddFundsView = styled(View)`
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #e7e7e7;
+`;
+
+export const PaymentMehodView = styled(View)`
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #e7e7e7;
+`;
+
 export const Container = styled(LinearGradient)`
   justify-content: center;
   align-items: center;

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { Text, Clipboard, ToastAndroid } from 'react-native';
+import { Text, Clipboard, ToastAndroid, TouchableOpacity } from 'react-native';
 import { Query } from 'react-apollo';
 import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
@@ -70,14 +70,14 @@ class Wallet extends React.Component {
             <IconStyle name="money-bill-wave" />
           </ActionButton.Item>
 
-          <ActionButton.Item
+          {/* <ActionButton.Item
             buttonColor="#9b59b6"
             title="Adicionar fundos"
             onPress={() => navigation.navigate('AddFunds')}
             fixNativeFeedbackRadius
           >
             <IconStyle name="money-bill-wave" />
-          </ActionButton.Item>
+          </ActionButton.Item> */}
         </ActionButton>
 
         <Container colors={['#14995D', '#14997e']}>
@@ -94,8 +94,10 @@ class Wallet extends React.Component {
 
         <Menu>
           <ButtonContainer>
-            <IconPig name="piggy-bank" size={20} color="#fff" />
-            <ButtonMessage>Adicionar</ButtonMessage>
+            <TouchableOpacity activeOpacity={0.5} onPress={() => { navigation.navigate('AddFunds'); }}>
+              <IconPig name="piggy-bank" size={20} color="#fff" />
+              <ButtonMessage>Adicionar</ButtonMessage>
+            </TouchableOpacity>
           </ButtonContainer>
           <ButtonContainer>
             <IconBank name="bank" size={20} color="#fff" />
