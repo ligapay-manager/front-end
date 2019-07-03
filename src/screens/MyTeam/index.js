@@ -1,13 +1,16 @@
-import React from 'react';
-import { Text } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
+import Team from './TeamScreen';
+import PlayerDetails from './PlayerDetailsScreen';
 
-import View from '../../components/View';
 
+const StackTeam = createStackNavigator({
+  Team: {
+    screen: Team,
+    navigationOptions: {
+      header: null
+    }
+  },
+  PlayerDetails
+});
 
-const MyTeam = () => (
-  <View>
-    <Text>Meu time aqui</Text>
-  </View>
-);
-
-export default MyTeam;
+export default StackTeam;
