@@ -1,8 +1,11 @@
 import { createStackNavigator } from 'react-navigation';
 
 import Wallet from './Wallet';
-import CreateTransaction from './CreateTransaction';
 import AddFunds from './AddFunds';
+import CreateTransaction from './CreateTransaction';
+import PaymentMethod from './PaymentMethod';
+import AddCreditCard from './AddCreditCard';
+import CreateBill from './CreateBill';
 
 
 export default createStackNavigator({
@@ -26,6 +29,24 @@ export default createStackNavigator({
   },
   AddFunds: {
     screen: AddFunds,
+    navigationOptions: {
+      header: null
+    }
+  },
+  PaymentMethod: {
+    screen: PaymentMethod,
+    navigationOptions: {
+      header: null
+    }
+  },
+  AddCreditCard: {
+    screen: AddCreditCard,
+    navigationOptions: {
+      header: null
+    }
+  },
+  CreateBill: {
+    screen: CreateBill,
     navigationOptions: {
       header: null
     }
