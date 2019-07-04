@@ -115,8 +115,10 @@ class Wallet extends React.Component {
                 <Text style={{ color: 'grey' }}>{c.lastDigits}</Text>
               </Card>
             ))
-          ) : (
-            <EmptyState />
+          ) : (       
+            <TouchableOpacity activeOpacity={0.5} onPress={() => { navigation.navigate('AddCreditCard'); }}>
+              <EmptyState />            
+            </TouchableOpacity>              
           )}
         </CardsContainer>
       </WalletView>

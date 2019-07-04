@@ -18,7 +18,7 @@ class AddFunds extends React.Component {
 
     return (
       <AddFundsView>
-        <Text>AddFunds</Text>
+        <Text>Adicionar dinheiro</Text>
         <TextInput
           style={{height: 100, width: 100, borderColor: "green", borderWidth: 1, textAlign: "center", fontSize: 50}}
           onChangeText={(text) => this.setState({amount})}

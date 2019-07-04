@@ -120,5 +120,5 @@ export const ButtonMessage = styled.Text`
   margin-left: 15px;
   font-size: 16px;
   font-family: "Abel-Regular";
-  color: #fff;
+  color: #ffff;
 `;
