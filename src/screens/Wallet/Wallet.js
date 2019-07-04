@@ -93,16 +93,18 @@ class Wallet extends React.Component {
         </Container>
 
         <Menu>
-          <ButtonContainer>
-            <TouchableOpacity activeOpacity={0.5} onPress={() => { navigation.navigate('AddFunds'); }}>
+          <TouchableOpacity activeOpacity={0.5} onPress={() => { navigation.navigate('AddFunds'); }}>
+            <ButtonContainer>
               <IconPig name="piggy-bank" size={20} color="#fff" />
               <ButtonMessage>Adicionar</ButtonMessage>
-            </TouchableOpacity>
-          </ButtonContainer>
-          <ButtonContainer>
-            <IconBank name="bank" size={20} color="#fff" />
-            <ButtonMessage>Retirar</ButtonMessage>
-          </ButtonContainer>
+            </ButtonContainer>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.5} onPress={() => { navigation.navigate('AddFunds'); }}>
+            <ButtonContainer>
+              <IconBank name="bank" size={20} color="#fff" />
+              <ButtonMessage>Retirar</ButtonMessage>
+            </ButtonContainer>
+          </TouchableOpacity>
         </Menu>
 
         <CardsContainer>
