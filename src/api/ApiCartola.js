@@ -94,6 +94,15 @@ const ApiCartola = {
     } catch (error) {
       return MakeResponse(error.response.status, error.response.data);
     }
+  },
+  getTeam: async () => {
+    try {
+      const { user } = store.getState();
+      const { data } = await axios.get('auth/time', { headers: { 'X-GLB-Token': user.tokenGlobo } });
+      return MakeResponse(200, data);
+    } catch (error) {
+      return MakeResponse(error.response.status, error.response.data);
+    }
   }
 };
 
