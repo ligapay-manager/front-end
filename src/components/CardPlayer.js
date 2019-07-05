@@ -25,7 +25,7 @@ const PlayerInfo = styled.View`
 
 const PlayerName = styled.Text`
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const PlayerStatistic = styled.View`
@@ -54,24 +54,24 @@ export default class CardPlayer extends Component {
           <PlayerName>{player.apelido}</PlayerName>
           <PlayerContainerStatistic>
             <PlayerStatistic>
-              <Text>{`C$ ${player.preco_num}`}</Text>
-              <Text>Preço</Text>
+              <Text style={{ fontSize: 13 }}>{`C$ ${player.preco_num}`}</Text>
+              <Text style={{ fontSize: 13 }}>Preço</Text>
             </PlayerStatistic>
             <PlayerStatistic>
-              <Text>{player.variacao_num}</Text>
-              <Text>Var.(C$)</Text>
+              <Text style={{ fontSize: 13 }}>{player.variacao_num}</Text>
+              <Text style={{ fontSize: 13 }}>Var.(C$)</Text>
             </PlayerStatistic>
             <PlayerStatistic>
-              <Text>{player.media_num}</Text>
-              <Text>Média</Text>
+              <Text style={{ fontSize: 13 }}>{player.media_num}</Text>
+              <Text style={{ fontSize: 13 }}>Média</Text>
             </PlayerStatistic>
             <PlayerStatistic>
-              <Text>{player.pontos_num}</Text>
-              <Text>Última</Text>
+              <Text style={{ fontSize: 13 }}>{player.pontos_num}</Text>
+              <Text style={{ fontSize: 13 }}>Última</Text>
             </PlayerStatistic>
             <PlayerStatistic>
-              <Text>{player.jogos_num}</Text>
-              <Text>Jogos</Text>
+              <Text style={{ fontSize: 13 }}>{player.jogos_num}</Text>
+              <Text style={{ fontSize: 13 }}>Jogos</Text>
             </PlayerStatistic>
           </PlayerContainerStatistic>
         </PlayerInfo>
