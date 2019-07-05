@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-// import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
 
 // import {
 //   PaymentMehodView
@@ -14,6 +14,7 @@ class AddCreditCard extends React.Component {
     return (
       <View>
         <Text>Cartão de crédito</Text>
+        <CreditCardInput requiresName={true}/>
       </View>
     );
   }
